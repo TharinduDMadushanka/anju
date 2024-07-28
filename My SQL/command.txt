@@ -1,0 +1,173 @@
+#============Show Databases===========
+
+SHOW DATABASES;
+
+#============Create Databases===========
+
+CREATE DATABASE shop;
+
+#============Correct way to Create Databases===========
+
+CREATE DATABASE IF NOT EXISTS shop;
+
+#============Remove Databases===========
+
+DROP DATABASE shop;
+
+#============Correct way to Remove Databases===========
+
+DROP DATABASE IF EXISTS shop;
+
+#===error===
+
+# CREATE DATABASE IF NOT EXISTS my shop; 
+
+#=========== Naming Convention =========
+
+CREATE DATABASE IF NOT EXISTS `my shop` or my_shop; 
+
+
+#================How to Select Database===================
+
+USE shop;
+
+=====================TABLES====================================
+
+=====================Create Table==========================
+
+CREATE TABLE IF NOT EXISTS customer(
+	nic VARCHAR(45),
+	name VARCHAR(45),
+	address VARCHAR(50),
+	salary DOUBLE
+);
+
+=====================Show Table==========================
+
+SHOW TABLES;
+
+=====================How to check Table column==============
+
+DESCRIBE customer;
+DESC customer;
+
+============================TASK=============================
+
+CREATE DATABASE IF NOT EXISTS class;
+
+CREATE TABLE IF NOT EXISTS student(
+	s_id VARCHAR(45),
+	name VARCHAR(45),
+	age INT(3)
+);
+
+DESC student;
+
+SELECT * FROM student;
+
+=============================================================
+
+===================Insert Data  to table====================
+
+INSERT INTO student (s_id,name,age) VALUES 
+('s01','Nimal',21),('s02','Aamal',18),('s03','Kamal',24);
+
+INSERT INTO student (s_id,name,age) VALUES 
+ ('s04','Sunil,15),('s05','Asiri',25);
+
+
+===================How to check data in the table============
+
+ALTER TABLE student ADD COLUMN email VARCHAR(45);
+
+===================How to Update Column================
+
+UPDATE student SET email ="nimal@gmail.com"; ---> update for all emails
+
+
+===================How to Rename Table================
+
+ALTER TABLE student RENAME TO user;
+
+===================How to Rename Column================
+
+ALTER TABLE user CHANGE COLUMN email user_name VARCHAR(45);
+
+===================How to Delete a Column================
+
+ALTER TABLE user DROP COLUMN user_name;
+
+===================How to Delete a Table================
+
+DROP TABLE user;
+
+===================DROP , DELETE , TRUNCATE================
+
+DROP --> table , database
+
+DELETE --> Records delete with a logic
+
+TRUNCATE ---> Records delete without a logic
+
+========================= DELETE =========================
+
+DELETE FROM student WHERE name ="Kamal";
+
+=================== TRUNCATE ================
+
+TRUNCATE student;
+
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+======================== Table Constraints ===========================
+
+1) Primary Key 2) NOT NULL 3) CHECK 4) DEFAULT 5) UNIQUE 6) FOREIGN KEY
+
+
+
+
+DROP DATABASE IF EXISTS shop;
+CREATE DATABASE IF NOT EXISTS shop;
+USE shop;
+
+CREATE TABLE IF NOT EXISTS user(
+	nic VARCHAR(15) PRIMARY KEY,
+	name VARCHAR(20) NOT NULL,
+	password VARCHAR(20)
+);
+
+INSERT INTO user VALUES ('95','Kamal','456');
+INSERT INTO user VALUES ('95','Amal','788');
+
+
+
+=====================No Null Values ===========================
+
+
+INSERT INTO user VALUES (null,'Kamal','456'); ---> cant null primary key
+INSERT INTO user VALUES ('null','Amal','788'); --> 'null' get as a value
+
+
+==================== Unique ========================
+
+CREATE TABLE IF NOT EXISTS user(
+	nic VARCHAR(15) PRIMARY KEY,
+	name VARCHAR(20) NOT NULL,
+	email VARCHAR(45) UNIQUE NOT NULL,
+	password VARCHAR(20)
+);
+
+
+==================== DEFAULT ========================
+
+CREATE TABLE IF NOT EXISTS user(
+	nic VARCHAR(15) PRIMARY KEY,
+	name VARCHAR(20) NOT NULL,
+	password VARCHAR(20),
+	email VARCHAR(45) UNIQUE NOT NULL,
+	salary DOUBLE DEFAULT(0.0)
+);
+
+INSERT INTO user (nic,name,password,email,salary) VALUES 
+(1,'Kamal','456','s@gmail.com',0);

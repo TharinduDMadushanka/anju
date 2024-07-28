@@ -1,0 +1,33 @@
+DROP TABLE customer;
+CREATE TABLE IF NOT EXISTS customer(
+
+    c_id VARCHAR(5),
+    name VARCHAR(45),
+    country VARCHAR(45),
+    PRIMARY KEY (c_id,country)
+
+)PARTITION BY LIST COLUMNS (country)(
+
+    PARTITION p_SriLanka VALUES IN ('Sri Lanka'),
+    PARTITION p_India VALUES IN ('India'),
+    PARTITION p_USA VALUES IN ('USA')
+
+);
+SELECT PARTITION_ORDINAL_POSITION, TABLE_ROWS, PARTITION_METHOD
+FROM information_schema.PARTITIONS
+WHERE TABLE_SCHEMA = 'mydb'
+  AND TABLE_NAME = 'customer';
+
+INSERT IGNORE INTO customer VALUES ('C01','Nimal','Sri Lanka');
+INSERT IGNORE INTO customer VALUES ('C02','Sunil','Sri Lanka');
+INSERT IGNORE INTO customer VALUES ('C03','Ajith','India');
+INSERT IGNORE INTO customer VALUES ('C05','Nimal','USA');
+INSERT IGNORE INTO customer VALUES ('C06','Kumudu','USA');
+INSERT IGNORE INTO customer VALUES ('C07','Kumudu','UK');
+
+SELECT PARTITION_ORDINAL_POSITION, TABLE_ROWS, PARTITION_METHOD
+FROM information_schema.PARTITIONS
+WHERE TABLE_SCHEMA = 'mydb'
+  AND TABLE_NAME = 'customer';
+
+SELECT * FROM customer;

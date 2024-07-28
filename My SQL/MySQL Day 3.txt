@@ -1,0 +1,69 @@
+#==================================== MANY TO MANY ==============================================
+
+DROP DATABASE school;
+CREATE DATABASE school;
+USE school;
+
+CREATE TABLE IF NOT EXISTS student(
+	S_ID VARCHAR(5) PRIMARY KEY,
+	name VARCHAR(45) NOT NULL,
+	age INT
+);
+
+SHOW TABLES;
+DESC student;
+
+INSERT INTO student VALUES('S_01','Nimal',24),('S_02','Kamal',18),('S_03','Amal',23);
+
+CREATE TABLE IF NOT EXISTS course(
+	C_ID VARCHAR(5) PRIMARY KEY,
+	title VARCHAR(45) NOT NULL,
+	cost DOUBLE
+);
+
+INSERT INTO student VALUES('C_01','Java',25000),('C_02','Python',30000),('C_03','JS',15000);
+
+CREATE TABLE IF NOT EXISTS registration(
+	
+	student_id VARCHAR(5),
+	course_id VARCHAR(5),
+	reg_date DATE,
+
+	CONSTRAINT PRIMARY KEY(student_id,course_id),
+	CONSTRAINT FOREIGN KEY(student_id) REFERENCES student(S_ID) ON DELETE CASCADE
+	ON UPDATE CASCADE,
+	CONSTRAINT FOREIGN KEY(course_id) REFERENCES course(C_ID) ON DELETE CASCADE
+	ON UPDATE CASCADE
+);
+#
+INSERT INTO registration VALUES
+	('S_01','C_01','2024-01-01'),
+	('S_01','C_02','2024-05-11'),
+	('S_02','C_01','2024-06-25');
+
+#
+
+
+
+#=============================================== FUNCTIONS ===============================================
+
+
+
+
+DROP FUNCTION IF EXISTS getName;
+
+
+DELIMITER //
+
+
+CREATE FUNCTION getName(id VARCHAR(45))
+RETURNS VARCHAR(45)
+DETERMINISTIC 
+BEGIN
+    DECLARE name VARCHAR(45);
+    SELECT customer_name INTO name FROM customer WHERE customer_id = id;
+    RETURN name;
+END //
+
+
+DELIMITER ;

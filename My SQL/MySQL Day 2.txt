@@ -1,0 +1,250 @@
+DROP DATABASE IF EXISTS shop;
+CREATE DATABASE IF NOT EXISTS shop;
+SHOW DATABASES;
+USE shop;
+
+CREATE TABLE IF NOT EXISTS customer(
+	
+	id INT AUTO_INCREMENT,
+	name VARCHAR(45) NOT NULL,
+	CONSTRAINT PRIMARY KEY(id)
+);
+
+SHOW TABLES;
+DESC customer;
+
+INSERT INTO customer (name) VALUES ("Nimal");
+SELECT * FROM customer;
+INSERT INTO customer (name) VALUES ("Kamal");
+
+DELETE FROM customer WHERE id =2;
+INSERT INTO customer (name) VALUES ("Amal");
+
+#=========================COPY A TABLE===========================
+
+CREATE TABLE IF NOT EXISTS t1 AS SELECT * FROM customer;
+SHOW TABLES;
+SELECT * FROM t1;
+
+
+#======================= CRUD OPERATIONS ========================
+
+DROP DATABASE IF EXISTS shop;
+CREATE DATABASE IF NOT EXISTS shop;
+SHOW DATABASES;
+USE shop;
+
+CREATE TABLE IF NOT EXISTS customer(
+	
+	id INT PRIMARY KEY,
+	first_name VARCHAR(45),
+	last_name VARCHAR(45),
+	country VARCHAR(45),
+	gender ENUM('MALE','FEMALE','OTHER'),
+	city VARCHAR(45),
+	salary DOUBLE,
+	dob DATE
+);
+
+INSERT INTO customer VALUES(1,'Nimal','Perera','USA','male','LA',75000,'1999-03-25');
+INSERT INTO customer VALUES(2,'Kamal','Silva','USA','male','FL',155000,'2000-02-15');
+INSERT INTO customer VALUES(3,'Amal','Gune','UK','male','GB',85000,'1987-01-28');
+INSERT INTO customer VALUES(4,'Nadeeka','Guruge','Sri Lanka','female','Baddegama',50000,'1964-05-01');
+INSERT INTO customer VALUES(5,'Rani','Wickrama','India','Female','BL',16000,'1974-12-15');
+INSERT INTO customer VALUES(6,'Kasun','Silva','Sri Lanka','male','Colombo',25000,'1997-06-05');
+INSERT INTO customer VALUES(7,'Ometh','Weliginda','Sri Lanka','male','Panadura',185000,'2002-05-17');
+INSERT INTO customer VALUES(8,'Aadil','Aroos','UAE','male','Dubai',125000,'2002-02-02');
+INSERT INTO customer VALUES(9,'Tharindu','Gunathilaka','UK','male','GB',175000,'2002-03-02');
+INSERT INTO customer VALUES(10,'Vihanga','Silva','USA','male','PR',75000,'1998-01-17');
+
+
+SELECT first_name FROM customer;
+SELECT first_name,last_name FROM customer;
+
+
+SELECT first_name,salary * 5 FROM customer;
+
+
+#============================================ AS (ALIAS) ================================================
+
+
+SELECT first_name FROM customer;
+
+SELECT first_name AS customer_name FROM customer;
+
+
+#=============================================== WHERE CLAUSE ============================================
+
+SELECT * FROM customer WHERE country="USA";
+
+#========================================== DESC | ASC (ORDER BY) ========================================
+
+SELECT * FROM customer;
+
+SELECT * FROM customer ORDER BY id DESC;
+
+SELECT * FROM customer ORDER BY first_name DESC;
+
+
+#========================================= LIMIT,OFFSET (PAGINATION) ============================================
+
+SELECT * FROM customer;
+
+SELECT * FROM customer LIMIT 3;
+
+SELECT * FROM customer WHERE country ="USA" LIMIT 2;
+
+SELECT * FROM customer WHERE country ="USA" ORDER BY salary DESC LIMIT 2;
+
+#=============data bundle ==============
+
+SELECT * FROM customer LIMIT 0,3;
+SELECT * FROM customer LIMIT 3,3;
+SELECT * FROM customer LIMIT 6,3;
+SELECT * FROM customer LIMIT 9,3;
+
+
+#===================================AND (&&) =================================================
+
+
+SELECT * FROM customer WHERE gender="male" && salary>100000;
+SELECT * FROM customer WHERE gender="male" AND salary>100000;
+
+
+#===================================OR (||) =================================================
+
+SELECT * FROM customer WHERE country="USA" OR salary>100000;
+SELECT * FROM customer WHERE country="USA" || salary>100000;
+
+
+#===================================! (<>) =================================================
+
+SELECT * FROM customer WHERE country !="USA";
+
+
+#=================================== LIKE ("text%" , '%text' , '%text%') ==============================
+
+
+SELECT * FROM customer WHERE first_name LIKE '%n';        --> gives last 'n'
+SELECT * FROM customer WHERE first_name LIKE 'n%';        --> gives first 'n'
+SELECT * FROM customer WHERE first_name LIKE '%n%';       --> gives anywhere 'n'
+
+
+#=================================== REGEXP =================================================
+
+
+SELECT * FROM customer WHERE first_name REGEXP 'na$'; 
+ 
+SELECT * FROM customer WHERE first_name REGEXP 'du$';  
+
+SELECT * FROM customer WHERE first_name REGEXP '^na'; 
+
+
+#=================================== BETWEEN =================================================
+
+
+# SELECT * FROM customer WHERE  salary  > 50000 AND salary < 100000; 
+
+# SELECT * FROM customer WHERE  salary  >= 50000 AND salary <= 100000; 
+
+SELECT * FROM customer WHERE  salary BETWEEN 50000 AND 100000; 
+
+
+================================= question ======================================
+
+================================= IN ======================================
+
+SELECT * FROM customer WHERE country = "USA" OR country = "UK" OR country = "UAE";
+
+SELECT * FROM customer WHERE country IN ("USA", "UK", "UAE");
+
+
+#======================================= DISTINCT (Remove Duplicates) =====================================
+
+SELECT DISTINCT country FROM customer;
+
+SELECT DISTINCT gender FROM customer;
+
+
+############################################ End of MySQL Basics ########################################
+
+
+######################################## Advance topic of MySQL  ########################################
+
+
+
+#========================================= ONE TO ONE RELATION ==========================================
+
+#================ Step 01 (wrong)================
+
+DROP DATABASE IF EXISTS school;
+CREATE DATABASE IF NOT EXISTS school;
+USE school;
+
+CREATE TABLE IF NOT EXISTS student(
+
+	s_id VARCHAR(45) PRIMARY KEY,
+	name VARCHAR(45) NOT NULL,
+	age INT
+);
+
+SHOW TABLES;
+DESC student;
+
+
+CREATE TABLE IF NOT EXISTS laptop(
+
+	l_id VARCHAR(45) PRIMARY KEY,
+	brand VARCHAR(45) NOT NULL,
+	cost DOUBLE
+);
+
+SHOW TABLES;
+DESC laptop;
+
+
+INSERT INTO student VALUES('s_01','Nimal',21);
+INSERT INTO student VALUES('s_02','Kamal',18);
+INSERT INTO student VALUES('s_03','Amal',24);
+
+SELECT * FROM student;
+
+INSERT INTO laptop VALUES('l_01','Acer',225000),('l_02','Asus',175000),('l_03','Mac',650000);
+
+SELECT * FROM laptop;
+
+
+
+#================ Step 02 (wrong)================
+
+DROP DATABASE IF EXISTS school;
+CREATE DATABASE IF NOT EXISTS school;
+USE school;
+
+CREATE TABLE IF NOT EXISTS student(
+
+	s_id VARCHAR(45) PRIMARY KEY,
+	name VARCHAR(45) NOT NULL,
+	age INT
+);
+
+SHOW TABLES;
+DESC student;
+
+
+INSERT INTO student VALUES('s_01','Nimal',21);
+INSERT INTO student VALUES('s_02','Kamal',18);
+INSERT INTO student VALUES('s_03','Amal',24);
+
+CREATE TABLE IF NOT EXISTS laptop(
+
+	l_id VARCHAR(45) PRIMARY KEY,
+	brand VARCHAR(45) NOT NULL,
+	cost DOUBLE
+	student_id VARCHAR(45),
+	CONSTRAINT FOREIGN KEY (student_id) REFERENCES student(s_id)
+);
+
+
+
+#========================================= ONE TO MANY RELATION ==========================================
