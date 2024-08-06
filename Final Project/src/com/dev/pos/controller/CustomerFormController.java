@@ -40,13 +40,22 @@ public class CustomerFormController {
     String searchText="";
 
     public void initialize() {
-        loadCustomer(searchText);
+
         colNo.setCellValueFactory(new PropertyValueFactory<>("id"));
         colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
         colName.setCellValueFactory(new PropertyValueFactory<>("name"));
         colContact.setCellValueFactory(new PropertyValueFactory<>("contact"));
         colSalary.setCellValueFactory(new PropertyValueFactory<>("salary"));
         colDelete.setCellValueFactory(new PropertyValueFactory<>("button"));
+
+        loadCustomer(searchText);
+
+        txtSearch.textProperty().addListener((observable, oldValue, newValue) -> {
+            searchText = newValue;
+            loadCustomer(searchText);
+
+        });
+
     }
 
 
@@ -116,9 +125,8 @@ public class CustomerFormController {
             tblCustomer.setItems(obList);
 
         }catch (ClassNotFoundException | SQLException e){
-
+            e.printStackTrace();
         }
-
 
     }
 }
