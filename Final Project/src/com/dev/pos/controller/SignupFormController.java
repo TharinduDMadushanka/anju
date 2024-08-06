@@ -2,6 +2,7 @@ package com.dev.pos.controller;
 
 import com.dev.pos.dao.DatabaseAccessCode;
 import com.dev.pos.db.DBConnection;
+import com.dev.pos.dto.UserDTO;
 import com.dev.pos.util.security.PasswordManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -45,7 +46,9 @@ public class SignupFormController {
 //            throw new RuntimeException(e);
 //        }
 
-        boolean isSaved = DatabaseAccessCode.createUser(txtEmail.getText(), txtPassword.getText().trim());
+        UserDTO userDTO = new UserDTO(txtEmail.getText(), txtPassword.getText());
+
+        boolean isSaved = DatabaseAccessCode.createUser(userDTO);
         if(isSaved){
             new Alert(Alert.AlertType.INFORMATION,"User has been saved.!").show();
             setUI("LoginForm");
