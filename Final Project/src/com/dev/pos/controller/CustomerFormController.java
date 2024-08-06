@@ -5,7 +5,11 @@ import com.dev.pos.dto.CustomerDTO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -33,30 +37,42 @@ public class CustomerFormController {
     }
 
     public void btnSaveOnAction(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+        // Validate input fields
+//        if (txtEmail.getText().isEmpty() || txtName.getText().isEmpty() || txtContact.getText().isEmpty() || txtSalary.getText().isEmpty()) {
+//            new Alert(Alert.AlertType.WARNING, "Please fill all fields!").show();
+//            return;
+//        }
+
+        double salary;
+        try {
+            salary = Double.parseDouble(txtSalary.getText());
+        } catch (NumberFormatException e) {
+            new Alert(Alert.AlertType.WARNING, "Invalid salary format!").show();
+            return;
+        }
 
         CustomerDTO dto = new CustomerDTO(
                 txtEmail.getText(),
                 txtName.getText(),
                 txtContact.getText(),
-                Double.parseDouble(txtSalary.getText())
+                salary
         );
 
         if (btnSave.getText().equalsIgnoreCase("Save Customer")) {
             CustomerDTO customer = DatabaseAccessCode.findCustomer(txtEmail.getText());
-            if (customer.getEmail().equalsIgnoreCase(txtEmail.getText())) {
-                new Alert(Alert.AlertType.WARNING, "Customer is already saved.!").show();
+
+            if (customer != null) {
+                new Alert(Alert.AlertType.WARNING, "Customer is already saved!").show();
             } else {
                 boolean isSaved = DatabaseAccessCode.createCustomer(dto);
                 if (isSaved) {
-                    new Alert(Alert.AlertType.INFORMATION, "Customer has been saved.!").show();
+                    new Alert(Alert.AlertType.INFORMATION, "Customer has been saved!").show();
                     clearFields();
                 } else {
-                    new Alert(Alert.AlertType.ERROR, "Customer could not be saved.!").show();
-
+                    new Alert(Alert.AlertType.ERROR, "Customer could not be saved!").show();
                 }
             }
         }
-
     }
 
     private void setUI(String location) throws IOException {
@@ -72,5 +88,4 @@ public class CustomerFormController {
         txtContact.clear();
         txtSalary.clear();
     }
-
 }
