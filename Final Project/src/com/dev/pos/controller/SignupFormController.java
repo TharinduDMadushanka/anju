@@ -1,5 +1,6 @@
 package com.dev.pos.controller;
 
+import com.dev.pos.dao.DatabaseAccessCode;
 import com.dev.pos.db.DBConnection;
 import com.dev.pos.util.security.PasswordManager;
 import javafx.event.ActionEvent;
@@ -21,27 +22,35 @@ public class SignupFormController {
     public TextField txtEmail;
     public PasswordField txtPassword;
 
-    public void btnRegisterOnAction(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+    public void btnRegisterOnAction(ActionEvent actionEvent) throws SQLException, ClassNotFoundException, IOException {
 
-        try{
-            Connection connection = DBConnection.getInstance().getConnection();
-            String sql = "INSERT INTO user VALUES(?,?)";
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, txtEmail.getText());
-            preparedStatement.setString(2, PasswordManager.encrypt(txtPassword.getText().trim()));
+//        try{
+//            Connection connection = DBConnection.getInstance().getConnection();
+//            String sql = "INSERT INTO user VALUES(?,?)";
+//            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+//            preparedStatement.setString(1, txtEmail.getText());
+//            preparedStatement.setString(2, PasswordManager.encrypt(txtPassword.getText().trim()));
+//
+//            int count = preparedStatement.executeUpdate();
+//            if(count>0){
+//                new Alert(Alert.AlertType.INFORMATION,"User has been saved.!").show();
+//                setUI("LoginForm");
+//            }else {
+//                new Alert(Alert.AlertType.ERROR,"Something went wrong.!").show();
+//            }
+//
+//        }catch (SQLException | ClassNotFoundException e){
+//            new Alert(Alert.AlertType.ERROR,e.getMessage().toString()).show();
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
 
-            int count = preparedStatement.executeUpdate();
-            if(count>0){
-                new Alert(Alert.AlertType.INFORMATION,"User has been saved.!").show();
-                setUI("LoginForm");
-            }else {
-                new Alert(Alert.AlertType.ERROR,"Something went wrong.!").show();
-            }
-
-        }catch (SQLException | ClassNotFoundException e){
-            new Alert(Alert.AlertType.ERROR,e.getMessage().toString()).show();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        boolean isSaved = DatabaseAccessCode.createUser(txtEmail.getText(), txtPassword.getText().trim());
+        if(isSaved){
+            new Alert(Alert.AlertType.INFORMATION,"User has been saved.!").show();
+            setUI("LoginForm");
+        }else {
+            new Alert(Alert.AlertType.ERROR,"User not found.!").show();
         }
 
     }

@@ -1,6 +1,8 @@
 package com.dev.pos.controller;
 
+import com.dev.pos.dao.DatabaseAccessCode;
 import com.dev.pos.db.DBConnection;
+import com.dev.pos.dto.UserDTO;
 import com.dev.pos.util.security.PasswordManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -24,30 +26,47 @@ public class LoginFormController {
     public PasswordField txtPassword;
 
     public void btnLoginOnAction(ActionEvent actionEvent) {
-        try{
-            Connection connection = DBConnection.getInstance().getConnection();
-            String sql= "SELECT * FROM user WHERE email = ?";
+//        try{
+//            Connection connection = DBConnection.getInstance().getConnection();
+//            String sql= "SELECT * FROM user WHERE email = ?";
+//
+//            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+//            preparedStatement.setString(1, txtEmail.getText());
+//            ResultSet resultSet = preparedStatement.executeQuery();
+//
+//            if(resultSet.next()){
+//                if(PasswordManager.checkPassword(txtPassword.getText().trim(), resultSet.getString("password"))){
+//                    System.out.println("Password Matched");
+//                    setUI("DashboardForm");
+//                }else {
+//                    new Alert(Alert.AlertType.ERROR, "User not found.!").show();
+//                }
+//            }else {
+//                new Alert(Alert.AlertType.ERROR, "User not found.!").show();
+//            }
+//
+//        }catch (SQLException | ClassNotFoundException e){
+//            System.out.println(e.getMessage());
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
 
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, txtEmail.getText());
-            ResultSet resultSet = preparedStatement.executeQuery();
+       try{
 
-            if(resultSet.next()){
-                if(PasswordManager.checkPassword(txtPassword.getText().trim(), resultSet.getString("password"))){
-                    System.out.println("Password Matched");
-                    setUI("DashboardForm");
-                }else {
-                    new Alert(Alert.AlertType.ERROR, "User not found.!").show();
-                }
-            }else {
-                new Alert(Alert.AlertType.ERROR, "User not found.!").show();
-            }
+           UserDTO user = DatabaseAccessCode.findUser(txtEmail.getText());
 
-        }catch (SQLException | ClassNotFoundException e){
-            System.out.println(e.getMessage());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+           if(PasswordManager.checkPassword(txtPassword.getText(), user.getPassword())){
+               setUI("DashboardForm");
+           }else {
+               new Alert(Alert.AlertType.ERROR, "User not found.!").show();
+           }
+
+       }catch (ClassNotFoundException | SQLException e){
+           e.printStackTrace();
+       } catch (IOException e) {
+           throw new RuntimeException(e);
+       }
+
     }
 
     public void btnSignupOnAction(ActionEvent actionEvent) throws IOException {
