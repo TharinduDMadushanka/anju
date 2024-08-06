@@ -2,6 +2,9 @@ package com.dev.pos.controller;
 
 import com.dev.pos.dao.DatabaseAccessCode;
 import com.dev.pos.dto.CustomerDTO;
+import com.dev.pos.dto.TM.CustomerTm;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -10,6 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -24,13 +28,27 @@ public class CustomerFormController {
     public TextField txtSalary;
     public Button btnSave;
     public TextField txtSearch;
-    public TableView tblCustomer;
-    public TableColumn colNo;
-    public TableColumn colName;
-    public TableColumn colEmail;
-    public TableColumn colContact;
-    public TableColumn colSalary;
-    public TableColumn colDelete;
+    public TableView<CustomerTm> tblCustomer;
+    public TableColumn<CustomerTm,Integer> colNo;
+    public TableColumn<CustomerTm,String> colName;
+    public TableColumn<CustomerTm,String>  colEmail;
+    public TableColumn<CustomerTm,String>  colContact;
+    public TableColumn<CustomerTm,Double>  colSalary;
+    public TableColumn<CustomerTm,Button>  colDelete;
+
+
+    String searchText="";
+
+    public void initialize() {
+        loadCustomer(searchText);
+        colNo.setCellValueFactory(new PropertyValueFactory<>("id"));
+        colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
+        colName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        colContact.setCellValueFactory(new PropertyValueFactory<>("contact"));
+        colSalary.setCellValueFactory(new PropertyValueFactory<>("salary"));
+        colDelete.setCellValueFactory(new PropertyValueFactory<>("button"));
+    }
+
 
     public void btnBacktoHome(ActionEvent actionEvent) throws IOException {
         setUI("DashboardForm");
@@ -74,5 +92,33 @@ public class CustomerFormController {
         txtName.clear();
         txtContact.clear();
         txtSalary.clear();
+    }
+
+    private void loadCustomer(String searchText) {
+        ObservableList<CustomerTm> obList = FXCollections.observableArrayList();
+
+        try {
+            int counter=1;
+            for (CustomerDTO dto : DatabaseAccessCode.searchCustomer(searchText)) {
+                Button button = new Button("Delete");
+                CustomerTm customerTm = new CustomerTm(
+                        counter,
+                        dto.getEmail(),
+                        dto.getName(),
+                        dto.getContact(),
+                        dto.getSalary(),
+                        button
+                );
+                counter++;
+                obList.add(customerTm);
+            }
+
+            tblCustomer.setItems(obList);
+
+        }catch (ClassNotFoundException | SQLException e){
+
+        }
+
+
     }
 }
