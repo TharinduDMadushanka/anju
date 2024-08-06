@@ -24,10 +24,6 @@ public class LoginFormController {
     public PasswordField txtPassword;
 
     public void btnLoginOnAction(ActionEvent actionEvent) {
-    }
-
-    public void btnSignupOnAction(ActionEvent actionEvent) throws IOException {
-
         try{
             Connection connection = DBConnection.getInstance().getConnection();
             String sql= "SELECT * FROM user WHERE email = ?";
@@ -49,6 +45,9 @@ public class LoginFormController {
         }catch (SQLException | ClassNotFoundException e){
             System.out.println(e.getMessage());
         }
+    }
+
+    public void btnSignupOnAction(ActionEvent actionEvent) throws IOException {
 
         setUI("SignupForm");
     }
