@@ -56,6 +56,14 @@ public class CustomerFormController {
 
         });
 
+        // Listen for table
+
+        tblCustomer.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                setData(newValue);
+            }
+        });
+
     }
 
 
@@ -86,6 +94,8 @@ public class CustomerFormController {
                     new Alert(Alert.AlertType.ERROR, "Customer could not be saved!").show();
                 }
             }
+        }else {
+
         }
     }
 
@@ -127,6 +137,16 @@ public class CustomerFormController {
         }catch (ClassNotFoundException | SQLException e){
             e.printStackTrace();
         }
-
     }
+
+    private void setData(CustomerTm newValue) {
+        txtEmail.setEditable(false);
+        btnSave.setText("Update Customer");
+
+        txtName.setText(newValue.getName());
+        txtContact.setText(newValue.getContact());
+        txtSalary.setText(String.valueOf(newValue.getSalary()));
+        txtEmail.setText(newValue.getEmail());
+    }
+
 }
