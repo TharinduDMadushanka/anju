@@ -19,7 +19,7 @@
          </font>
       </Label>
       <Separator layoutX="14.0" layoutY="73.0" prefHeight="9.0" prefWidth="889.0" />
-      <Button layoutX="809.0" layoutY="31.0" mnemonicParsing="false" onAction="#btnBacktoHome" prefHeight="25.0" prefWidth="93.0" text="Back to Home">
+      <Button layoutX="774.0" layoutY="17.0" mnemonicParsing="false" onAction="#btnBacktoHome" prefHeight="26.0" prefWidth="116.0" text="Back to Home">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -44,7 +44,7 @@
             <Font name="System Bold" size="16.0" />
          </font>
       </TextField>
-      <Button fx:id="btnSave" layoutX="395.0" layoutY="179.0" mnemonicParsing="false" onAction="#btnSaveOnAction" prefHeight="26.0" prefWidth="116.0" text="Save Customer">
+      <Button fx:id="btnSave" layoutX="371.0" layoutY="178.0" mnemonicParsing="false" onAction="#btnSaveOnAction" prefHeight="26.0" prefWidth="142.0" text="Save Customer">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>

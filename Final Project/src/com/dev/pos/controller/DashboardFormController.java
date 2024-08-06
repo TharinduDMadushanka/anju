@@ -23,7 +23,8 @@ public class DashboardFormController {
         }
     }
 
-    public void btnCustomerManagementOnAction(ActionEvent actionEvent) {
+    public void btnCustomerManagementOnAction(ActionEvent actionEvent) throws IOException {
+        setUI("CustomerForm");
     }
 
     public void btnOrderDetailsOnAction(ActionEvent actionEvent) {
