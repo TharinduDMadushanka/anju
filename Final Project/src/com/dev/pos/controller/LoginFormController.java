@@ -55,8 +55,12 @@ public class LoginFormController {
 
            UserDTO user = DatabaseAccessCode.findUser(txtEmail.getText());
 
-           if(PasswordManager.checkPassword(txtPassword.getText(), user.getPassword())){
-               setUI("DashboardForm");
+           if(user != null){
+               if(PasswordManager.checkPassword(txtPassword.getText(), user.getPassword())){
+                   setUI("DashboardForm");
+               }else {
+                   new Alert(Alert.AlertType.ERROR, "User not found.!").show();
+               }
            }else {
                new Alert(Alert.AlertType.ERROR, "User not found.!").show();
            }
