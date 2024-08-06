@@ -37,25 +37,12 @@ public class CustomerFormController {
     }
 
     public void btnSaveOnAction(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
-        // Validate input fields
-//        if (txtEmail.getText().isEmpty() || txtName.getText().isEmpty() || txtContact.getText().isEmpty() || txtSalary.getText().isEmpty()) {
-//            new Alert(Alert.AlertType.WARNING, "Please fill all fields!").show();
-//            return;
-//        }
-
-        double salary;
-        try {
-            salary = Double.parseDouble(txtSalary.getText());
-        } catch (NumberFormatException e) {
-            new Alert(Alert.AlertType.WARNING, "Invalid salary format!").show();
-            return;
-        }
 
         CustomerDTO dto = new CustomerDTO(
                 txtEmail.getText(),
                 txtName.getText(),
                 txtContact.getText(),
-                salary
+                Double.parseDouble(txtSalary.getText())
         );
 
         if (btnSave.getText().equalsIgnoreCase("Save Customer")) {

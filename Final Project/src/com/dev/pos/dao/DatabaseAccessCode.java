@@ -103,11 +103,17 @@ public class DatabaseAccessCode {
     }
 
     public static List<CustomerDTO> findAllCustomer() throws SQLException, ClassNotFoundException {
+
+        Connection connection = DBConnection.getInstance().getConnection();
+        String sql = "SELECT * FROM customer";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        ResultSet resultSet = preparedStatement.executeQuery();
+
         List<CustomerDTO> customerDTOList = new ArrayList<>();
-        ResultSet resultSet = DBConnection.getInstance().getConnection().createStatement().executeQuery("SELECT * FROM customer");
 
         while (resultSet.next()) {
-            customerDTOList.add(new CustomerDTO(
+            customerDTOList.add(
+                    new CustomerDTO(
                     resultSet.getString("email"),
                     resultSet.getString("name"),
                     resultSet.getString("contact"),
@@ -118,7 +124,28 @@ public class DatabaseAccessCode {
     }
 
     public static List<CustomerDTO> searchCustomer(String searchText) throws SQLException, ClassNotFoundException {
-        return null; // Implement search logic as needed
+
+        searchText = "%" + searchText + "%";
+
+        Connection connection = DBConnection.getInstance().getConnection();
+        String sql = "SELECT * FROM customer WHERE email LIKE ? || name LIKE ? || contact LIKE ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setString(1, searchText);
+        preparedStatement.setString(2, searchText);
+        preparedStatement.setString(3, searchText);
+
+        ResultSet resultSet = preparedStatement.executeQuery();
+        List<CustomerDTO> customerDTOList = new ArrayList<>();
+        while (resultSet.next()) {
+            customerDTOList.add(new CustomerDTO(
+                    resultSet.getString("email"),
+                    resultSet.getString("name"),
+                    resultSet.getString("contact"),
+                    resultSet.getDouble("salary")
+
+            ));
+        }
+        return customerDTOList;
     }
 
     //-------------- Customer end---------
