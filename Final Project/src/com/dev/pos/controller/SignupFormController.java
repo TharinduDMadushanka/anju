@@ -33,12 +33,15 @@ public class SignupFormController {
             int count = preparedStatement.executeUpdate();
             if(count>0){
                 new Alert(Alert.AlertType.INFORMATION,"User has been saved.!").show();
+                setUI("LoginForm");
             }else {
                 new Alert(Alert.AlertType.ERROR,"Something went wrong.!").show();
             }
 
         }catch (SQLException | ClassNotFoundException e){
             new Alert(Alert.AlertType.ERROR,e.getMessage().toString()).show();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
 
     }
