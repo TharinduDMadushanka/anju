@@ -8,17 +8,14 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Optional;
 
 public class CustomerFormController {
     public AnchorPane context;
@@ -137,6 +134,28 @@ public class CustomerFormController {
                 );
                 counter++;
                 obList.add(customerTm);
+
+                //Customer Delete
+                button.setOnAction(event -> {
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION,"Are you sure..!", ButtonType.NO,ButtonType.YES);
+                    Optional<ButtonType> buttonType = alert.showAndWait();
+                    if (buttonType.get() == ButtonType.YES) {
+                        try {
+                            boolean isDeleted = DatabaseAccessCode.deleteCustomer(dto.getEmail());
+                            if (isDeleted) {
+                                new Alert(Alert.AlertType.INFORMATION, "Customer has been deleted!").show();
+                                loadCustomer(searchText);
+                                clearFields();
+                                btnSave.setText("Save Customer");
+                            }else {
+                                new Alert(Alert.AlertType.ERROR, "Customer could not be deleted!").show();
+                            }
+                        } catch (SQLException | ClassNotFoundException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                });
+
             }
 
             tblCustomer.setItems(obList);
