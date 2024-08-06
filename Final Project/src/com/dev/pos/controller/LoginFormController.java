@@ -35,6 +35,7 @@ public class LoginFormController {
             if(resultSet.next()){
                 if(PasswordManager.checkPassword(txtPassword.getText().trim(), resultSet.getString("password"))){
                     System.out.println("Password Matched");
+                    setUI("DashboardForm");
                 }else {
                     new Alert(Alert.AlertType.ERROR, "User not found.!").show();
                 }
@@ -44,6 +45,8 @@ public class LoginFormController {
 
         }catch (SQLException | ClassNotFoundException e){
             System.out.println(e.getMessage());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
