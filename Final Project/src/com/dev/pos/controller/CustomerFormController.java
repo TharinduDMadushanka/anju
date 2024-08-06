@@ -95,7 +95,14 @@ public class CustomerFormController {
                 }
             }
         }else {
-
+            boolean isUpdated = DatabaseAccessCode.updateCustomer(dto);
+            if (isUpdated) {
+                new Alert(Alert.AlertType.INFORMATION, "Customer has been updated!").show();
+                txtEmail.setEditable(true);
+                btnSave.setText("Save Customer");
+                clearFields();
+                loadCustomer(searchText);
+            }
         }
     }
 
