@@ -48,7 +48,7 @@ public class SignupFormController {
 
         UserDTO userDTO = new UserDTO(txtEmail.getText(), txtPassword.getText());
 
-        boolean isSaved = DatabaseAccessCode.createUser(userDTO);
+        boolean isSaved = new DatabaseAccessCode().createUser(userDTO);
         if(isSaved){
             new Alert(Alert.AlertType.INFORMATION,"User has been saved.!").show();
             setUI("LoginForm");
