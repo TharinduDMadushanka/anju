@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane fx:id="context" prefHeight="720.0" prefWidth="1020.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dev.pos.controller.ProductMainFormController">
+   <children>
+      <Label layoutX="24.0" layoutY="23.0" prefHeight="35.0" prefWidth="279.0" text="Product Management">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Label>
+      <Separator layoutX="24.0" layoutY="83.0" prefHeight="8.0" prefWidth="986.0" />
+      <Button layoutX="889.0" layoutY="27.0" mnemonicParsing="false" onAction="#btnBacktoHome" prefHeight="26.0" prefWidth="116.0" text="Back to Home">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <AnchorPane layoutX="24.0" layoutY="100.0" prefHeight="596.0" prefWidth="414.0" style="-fx-background-color: #A6A6A6;">
+         <children>
+            <TextField fx:id="txtProductCode" editable="false" layoutX="22.0" layoutY="14.0" prefHeight="26.0" prefWidth="136.0" promptText="Product Code">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </TextField>
+            <Button layoutX="196.0" layoutY="14.0" mnemonicParsing="false" onAction="#btnAddNewProductOnAction" prefHeight="37.0" prefWidth="166.0" text="+ New Product">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <TextField fx:id="txtProductDescription" layoutX="22.0" layoutY="75.0" prefHeight="106.0" prefWidth="340.0" promptText="Description">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </TextField>
+            <Button fx:id="btnSave" layoutX="109.0" layoutY="194.0" mnemonicParsing="false" onAction="#btnSaveOnAction" prefHeight="37.0" prefWidth="166.0" text="Save Product">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <TextField fx:id="txtSearch" alignment="CENTER" layoutX="15.0" layoutY="269.0" prefHeight="35.0" prefWidth="359.0" promptText="Search Product by ID">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </TextField>
+            <TableView fx:id="tblProduct" layoutX="10.0" layoutY="333.0" prefHeight="254.0" prefWidth="395.0">
+              <columns>
+                <TableColumn fx:id="colProductId" prefWidth="75.0" text="Code" />
+                <TableColumn fx:id="colDescription" prefWidth="114.39999389648438" text="Description" />
+                  <TableColumn fx:id="colShowMore" prefWidth="125.60002136230469" text="Show More" />
+                  <TableColumn fx:id="colDelete" text="Delete" />
+              </columns>
+            </TableView>
+         </children>
+      </AnchorPane>
+      <Separator layoutX="454.0" layoutY="93.0" orientation="VERTICAL" prefHeight="498.0" prefWidth="0.0" />
+      <TextField fx:id="txtSelectedProductCode" layoutX="468.0" layoutY="140.0" prefHeight="26.0" prefWidth="190.0" promptText="Selected Product Code">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </TextField>
+      <Button layoutX="839.0" layoutY="139.0" mnemonicParsing="false" onAction="#btnNewBatchOnAction" prefHeight="37.0" prefWidth="166.0" text="+ New Batch">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <TableView fx:id="tblProductMain" layoutX="468.0" layoutY="365.0" prefHeight="324.0" prefWidth="543.0">
+         <columns>
+            <TableColumn fx:id="colNo" prefWidth="27.20001220703125" text="#" />
+            <TableColumn fx:id="colQty" prefWidth="55.199981689453125" text="QTY" />
+            <TableColumn fx:id="colBuyPrice" prefWidth="87.199951171875" text="Buying Price" />
+            <TableColumn fx:id="colDiscount" prefWidth="87.2000732421875" text="Dis Available" />
+            <TableColumn fx:id="colShowPrice" prefWidth="94.39996337890625" text="Show Price" />
+            <TableColumn fx:id="colSellPrice" prefWidth="113.60003662109375" text="Selling Price" />
+            <TableColumn fx:id="colMainDelete" prefWidth="75.199951171875" text="Delete" />
+         </columns>
+      </TableView>
+      <TextField fx:id="txtSelectedDescription" editable="false" layoutX="507.0" layoutY="208.0" prefHeight="114.0" prefWidth="474.0" promptText="Description">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </TextField>
+   </children>
+</AnchorPane>
