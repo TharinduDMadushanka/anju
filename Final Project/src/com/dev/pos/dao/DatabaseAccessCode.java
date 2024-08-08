@@ -152,6 +152,18 @@ public class DatabaseAccessCode {
 
     //-------------- Product Start---------
 
+    public static int getLastProductId() throws SQLException, ClassNotFoundException {
+        Connection connection = DBConnection.getInstance().getConnection();
+        String sql = "SELECT code FROM  product ORDER BY code DESC LIMIT 1";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        if (resultSet.next()) {
+            return resultSet.getInt("code")+1;
+        }
+        return 1;
+    }
+
+    public static boolean saveProduct()
 
     //-------------- Product  end---------
 }

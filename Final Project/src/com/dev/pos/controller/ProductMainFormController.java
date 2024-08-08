@@ -36,7 +36,8 @@ public class ProductMainFormController {
     public TableColumn colMainDelete;
     public TextField txtSelectedDescription;
 
-    public void btnBacktoHome(ActionEvent actionEvent) {
+    public void btnBacktoHome(ActionEvent actionEvent) throws IOException {
+        setUI("DashboardForm");
     }
 
     public void btnAddNewProductOnAction(ActionEvent actionEvent) {
