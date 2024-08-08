@@ -12,5 +12,5 @@ public interface ProductDao {
     public Product findProduct(int code);
     public List<Product> findAllProduct();
     public List<Product> searchProduct(String value);
-
+    public int getLastProductId();
 }
