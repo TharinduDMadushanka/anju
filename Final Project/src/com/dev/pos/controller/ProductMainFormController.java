@@ -1,5 +1,6 @@
 package com.dev.pos.controller;
 
+import com.dev.pos.dao.DatabaseAccessCode;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,6 +14,7 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class ProductMainFormController {
     public AnchorPane context;
@@ -36,6 +38,10 @@ public class ProductMainFormController {
     public TableColumn colMainDelete;
     public TextField txtSelectedDescription;
 
+    public void initialize() {
+        loadProductId();
+    }
+
     public void btnBacktoHome(ActionEvent actionEvent) throws IOException {
         setUI("DashboardForm");
     }
@@ -55,4 +61,17 @@ public class ProductMainFormController {
         stage.show();
         stage.centerOnScreen();
     }
+
+    private void loadProductId() {
+
+        try {
+            txtProductCode.setText(String.valueOf(DatabaseAccessCode.getLastProductId()));
+        }catch (ClassNotFoundException e){
+            e.printStackTrace();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
 }

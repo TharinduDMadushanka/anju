@@ -234,6 +234,7 @@ public class DatabaseAccessCode {
 
         ResultSet resultSet = preparedStatement.executeQuery();
         List<ProductDto> productDtoList = new ArrayList<>();
+
         while (resultSet.next()) {
             productDtoList.add(new ProductDto(
                     resultSet.getInt(1),
