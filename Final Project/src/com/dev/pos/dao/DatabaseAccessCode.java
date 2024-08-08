@@ -2,6 +2,7 @@ package com.dev.pos.dao;
 
 import com.dev.pos.db.DBConnection;
 import com.dev.pos.dto.CustomerDTO;
+import com.dev.pos.dto.ProductDto;
 import com.dev.pos.dto.UserDTO;
 import com.dev.pos.util.security.PasswordManager;
 
@@ -114,11 +115,11 @@ public class DatabaseAccessCode {
         while (resultSet.next()) {
             customerDTOList.add(
                     new CustomerDTO(
-                    resultSet.getString("email"),
-                    resultSet.getString("name"),
-                    resultSet.getString("contact"),
-                    resultSet.getDouble("salary")
-            ));
+                            resultSet.getString("email"),
+                            resultSet.getString("name"),
+                            resultSet.getString("contact"),
+                            resultSet.getDouble("salary")
+                    ));
         }
         return customerDTOList;
     }
@@ -158,12 +159,90 @@ public class DatabaseAccessCode {
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
         ResultSet resultSet = preparedStatement.executeQuery();
         if (resultSet.next()) {
-            return resultSet.getInt("code")+1;
+            return resultSet.getInt("code") + 1;
         }
         return 1;
     }
 
-    public static boolean saveProduct()
+    public static boolean saveProduct(ProductDto productDto) throws SQLException, ClassNotFoundException {
+        Connection connection = DBConnection.getInstance().getConnection();
+        String sql = "INSERT INTO product VALUES(?,?)";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setInt(1, productDto.getCode());
+        preparedStatement.setString(2, productDto.getDescription());
+
+        return preparedStatement.executeUpdate() > 0;
+    }
+
+    public static boolean updateProduct(ProductDto productDto) throws SQLException, ClassNotFoundException {
+        Connection connection = DBConnection.getInstance().getConnection();
+        String sql = "UPDATE  product SET description = ? WHERE code = ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setString(1, productDto.getDescription());
+        preparedStatement.setInt(2, productDto.getCode());
+
+        return preparedStatement.executeUpdate() > 0;
+    }
+
+    public static boolean deleteProduct(int code) throws SQLException, ClassNotFoundException {
+        Connection connection = DBConnection.getInstance().getConnection();
+        String sql = "DELETE FROM product WHERE code =?";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setInt(1, code);
+
+        return preparedStatement.executeUpdate() > 0;
+    }
+
+    public static ProductDto findProduct(int code) throws SQLException, ClassNotFoundException {
+        Connection connection = DBConnection.getInstance().getConnection();
+        String sql = "SELECT * FROM product WHERE code = ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setInt(1, code);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        if (resultSet.next()) {
+            return new ProductDto(
+                    resultSet.getInt("code"),
+                    resultSet.getString("description")
+            );
+        }
+        return null;
+    }
+
+    public static List<ProductDto> findAllProduct() throws SQLException, ClassNotFoundException {
+        Connection connection = DBConnection.getInstance().getConnection();
+        String sql = "SELECT * FROM product";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        List<ProductDto> productDTOList = new ArrayList<>();
+        while (resultSet.next()) {
+            productDTOList.add(new ProductDto(
+                    resultSet.getInt("code"),
+                    resultSet.getString("description")
+            ));
+        }
+        return productDTOList;
+    }
+
+    public static List<ProductDto> searchProduct(String searchText) throws SQLException, ClassNotFoundException {
+        searchText = "%" + searchText + "%";
+
+        Connection connection = DBConnection.getInstance().getConnection();
+        String sql = "SELECT * FROM product WHERE description LIKE ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+        preparedStatement.setString(1, searchText);
+
+        ResultSet resultSet = preparedStatement.executeQuery();
+        List<ProductDto> productDtoList = new ArrayList<>();
+        while (resultSet.next()) {
+            productDtoList.add(new ProductDto(
+                    resultSet.getInt(1),
+                    resultSet.getString(2)
+            ));
+        }
+        return productDtoList;
+
+    }
 
     //-------------- Product  end---------
 }
