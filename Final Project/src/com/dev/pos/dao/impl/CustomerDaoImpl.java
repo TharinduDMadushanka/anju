@@ -15,7 +15,7 @@ import java.util.List;
 
 public class CustomerDaoImpl implements CustomerDao {
     @Override
-    public boolean saveCustomer(Customer customer) throws SQLException, ClassNotFoundException {
+    public boolean save(Customer customer) throws SQLException, ClassNotFoundException {
         Connection connection = DBConnection.getInstance().getConnection();
         String sql = "INSERT INTO customer VALUES(?,?,?,?)";
 
@@ -29,7 +29,7 @@ public class CustomerDaoImpl implements CustomerDao {
     }
 
     @Override
-    public boolean updateCustomer(Customer customer) throws SQLException, ClassNotFoundException {
+    public boolean update(Customer customer) throws SQLException, ClassNotFoundException {
         Connection connection = DBConnection.getInstance().getConnection();
         String sql = "UPDATE customer SET name = ?, contact = ?, salary = ? WHERE email = ?";
 
@@ -43,7 +43,7 @@ public class CustomerDaoImpl implements CustomerDao {
     }
 
     @Override
-    public boolean deleteCustomer(String email) throws SQLException, ClassNotFoundException {
+    public boolean delete(String email) throws SQLException, ClassNotFoundException {
         Connection connection = DBConnection.getInstance().getConnection();
         String sql = "DELETE FROM customer WHERE email = ?";
 
@@ -54,7 +54,7 @@ public class CustomerDaoImpl implements CustomerDao {
     }
 
     @Override
-    public Customer findCustomer(String email) throws SQLException, ClassNotFoundException {
+    public Customer find(String email) throws SQLException, ClassNotFoundException {
         Connection connection = DBConnection.getInstance().getConnection();
         String sql = "SELECT * FROM customer WHERE email = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -73,7 +73,7 @@ public class CustomerDaoImpl implements CustomerDao {
     }
 
     @Override
-    public List<Customer> findAllCustomers() throws SQLException, ClassNotFoundException {
+    public List<Customer> findAll() throws SQLException, ClassNotFoundException {
         Connection connection = DBConnection.getInstance().getConnection();
         String sql = "SELECT * FROM customer";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -94,7 +94,7 @@ public class CustomerDaoImpl implements CustomerDao {
     }
 
     @Override
-    public List<Customer> searchCustomer(String value) throws SQLException, ClassNotFoundException {
+    public List<Customer> search(String value) throws SQLException, ClassNotFoundException {
         value = "%" + value + "%";
 
         Connection connection = DBConnection.getInstance().getConnection();

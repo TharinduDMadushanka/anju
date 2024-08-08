@@ -65,7 +65,7 @@ public class ProductMainFormController {
     private void loadProductId() {
 
         try {
-            txtProductCode.setText(String.valueOf(DatabaseAccessCode.getLastProductId()));
+            txtProductCode.setText(String.valueOf(new DatabaseAccessCode().getLastProductId()));
         }catch (ClassNotFoundException e){
             e.printStackTrace();
         } catch (SQLException e) {

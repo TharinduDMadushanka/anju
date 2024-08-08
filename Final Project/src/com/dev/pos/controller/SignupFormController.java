@@ -46,14 +46,21 @@ public class SignupFormController {
 //            throw new RuntimeException(e);
 //        }
 
-        UserDTO userDTO = new UserDTO(txtEmail.getText(), txtPassword.getText());
+        try {
 
-        boolean isSaved = new DatabaseAccessCode().createUser(userDTO);
-        if(isSaved){
-            new Alert(Alert.AlertType.INFORMATION,"User has been saved.!").show();
-            setUI("LoginForm");
-        }else {
-            new Alert(Alert.AlertType.ERROR,"User not found.!").show();
+            UserDTO userDTO = new UserDTO(txtEmail.getText(),txtPassword.getText().trim());
+            boolean isSaved = new DatabaseAccessCode().createUser(userDTO);
+            if(isSaved){
+                new Alert(Alert.AlertType.INFORMATION,"User has been saved...!").show();
+                setUI("LoginForm");
+            }else {
+                new Alert(Alert.AlertType.INFORMATION,"User Not Found...!").show();
+            }
+
+        }catch (SQLException | ClassNotFoundException | IOException e){
+            e.printStackTrace();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
 
     }

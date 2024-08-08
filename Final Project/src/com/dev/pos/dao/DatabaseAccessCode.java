@@ -30,7 +30,7 @@ public class DatabaseAccessCode {
 
     //-------------- User start---------
 
-    public boolean createUser(UserDTO userDTO) throws SQLException, ClassNotFoundException {
+    public boolean createUser(UserDTO userDTO) throws Exception {
 //        Connection connection = DBConnection.getInstance().getConnection();
 //        String sql = "INSERT INTO user VALUES(?,?)";
 //
@@ -39,13 +39,13 @@ public class DatabaseAccessCode {
 //        preparedStatement.setString(2, PasswordManager.encrypt(userDTO.getPassword()));
 //
 //        return preparedStatement.executeUpdate() > 0;
-        return userDao.saveUser(new User(
+        return userDao.save(new User(
                 userDTO.getEmail(),
                 userDTO.getPassword()
         ));
     }
 
-    public UserDTO findUser(String email) throws SQLException, ClassNotFoundException {
+    public UserDTO findUser(String email) throws Exception {
 //        Connection connection = DBConnection.getInstance().getConnection();
 //        String sql = "SELECT * FROM user WHERE email = ?";
 //
@@ -60,7 +60,7 @@ public class DatabaseAccessCode {
 //            );
 //        }
 //        return null;
-        User user = userDao.findUser(email);
+        User user = userDao.find(email);
         if (user != null) {
             return new UserDTO(
                     user.getEmail(),
@@ -74,7 +74,7 @@ public class DatabaseAccessCode {
 
     //-------------- Customer start---------
 
-    public boolean createCustomer(CustomerDTO customerDTO) throws SQLException, ClassNotFoundException {
+    public boolean createCustomer(CustomerDTO customerDTO) throws Exception {
 //        Connection connection = DBConnection.getInstance().getConnection();
 //        String sql = "INSERT INTO customer VALUES(?,?,?,?)";
 //
@@ -85,7 +85,7 @@ public class DatabaseAccessCode {
 //        preparedStatement.setDouble(4, customerDTO.getSalary());
 //
 //        return preparedStatement.executeUpdate() > 0;
-        return customerDao.saveCustomer(new Customer(
+        return customerDao.save(new Customer(
                 customerDTO.getEmail(),
                 customerDTO.getName(),
                 customerDTO.getContact(),
@@ -93,7 +93,7 @@ public class DatabaseAccessCode {
         ));
     }
 
-    public boolean updateCustomer(CustomerDTO customerDTO) throws SQLException, ClassNotFoundException {
+    public boolean updateCustomer(CustomerDTO customerDTO) throws Exception {
 //        Connection connection = DBConnection.getInstance().getConnection();
 //        String sql = "UPDATE customer SET name = ?, contact = ?, salary = ? WHERE email = ?";
 //
@@ -104,7 +104,7 @@ public class DatabaseAccessCode {
 //        preparedStatement.setString(4, customerDTO.getEmail());
 //
 //        return preparedStatement.executeUpdate() > 0;
-        return customerDao.updateCustomer(new Customer(
+        return customerDao.update(new Customer(
                 customerDTO.getEmail(),
                 customerDTO.getName(),
                 customerDTO.getContact(),
@@ -112,7 +112,7 @@ public class DatabaseAccessCode {
         ));
     }
 
-    public boolean deleteCustomer(String email) throws SQLException, ClassNotFoundException {
+    public boolean deleteCustomer(String email) throws Exception {
 //        Connection connection = DBConnection.getInstance().getConnection();
 //        String sql = "DELETE FROM customer WHERE email = ?";
 //
@@ -120,10 +120,10 @@ public class DatabaseAccessCode {
 //        preparedStatement.setString(1, email);
 //
 //        return preparedStatement.executeUpdate() > 0;
-        return customerDao.deleteCustomer(email);
+        return customerDao.delete(email);
     }
 
-    public CustomerDTO findCustomer(String email) throws SQLException, ClassNotFoundException {
+    public CustomerDTO findCustomer(String email) throws Exception {
 //        Connection connection = DBConnection.getInstance().getConnection();
 //        String sql = "SELECT * FROM customer WHERE email = ?";
 //        PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -139,7 +139,7 @@ public class DatabaseAccessCode {
 //            );
 //        }
 //        return null;
-        Customer customer = customerDao.findCustomer(email);
+        Customer customer = customerDao.find(email);
         if (customer != null) {
             return new CustomerDTO(
                     customer.getEmail(),
@@ -151,7 +151,7 @@ public class DatabaseAccessCode {
         return null;
     }
 
-    public List<CustomerDTO> findAllCustomer() throws SQLException, ClassNotFoundException {
+    public List<CustomerDTO> findAllCustomer() throws Exception {
 
 //        Connection connection = DBConnection.getInstance().getConnection();
 //        String sql = "SELECT * FROM customer";
@@ -170,7 +170,7 @@ public class DatabaseAccessCode {
 //                    ));
 //        }
 //        return customerDTOList;
-        List<Customer> allCustomers = customerDao.findAllCustomers();
+        List<Customer> allCustomers = customerDao.findAll();
         List<CustomerDTO> customerDTOs = new ArrayList<>();
         for (Customer c : allCustomers) {
             customerDTOs.add(new CustomerDTO(
@@ -183,7 +183,7 @@ public class DatabaseAccessCode {
         return customerDTOs;
     }
 
-    public List<CustomerDTO> searchCustomer(String searchText) throws SQLException, ClassNotFoundException {
+    public List<CustomerDTO> searchCustomer(String searchText) throws Exception {
 
 //        searchText = "%" + searchText + "%";
 //
@@ -208,7 +208,7 @@ public class DatabaseAccessCode {
 //        return customerDTOList;
 
         List<CustomerDTO> customerDTOList = new ArrayList<>();
-        for (Customer c : customerDao.searchCustomer(searchText)) {
+        for (Customer c : customerDao.search(searchText)) {
             customerDTOList.add(new CustomerDTO(
                     c.getEmail(),
                     c.getName(),
@@ -235,7 +235,7 @@ public class DatabaseAccessCode {
         return productDao.getLastProductId();
     }
 
-    public boolean saveProduct(ProductDto productDto) throws SQLException, ClassNotFoundException {
+    public boolean saveProduct(ProductDto productDto) throws Exception {
 //        Connection connection = DBConnection.getInstance().getConnection();
 //        String sql = "INSERT INTO product VALUES(?,?)";
 //        PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -243,13 +243,13 @@ public class DatabaseAccessCode {
 //        preparedStatement.setString(2, productDto.getDescription());
 //
 //        return preparedStatement.executeUpdate() > 0;
-        return productDao.saveProduct(new Product(
+        return productDao.save(new Product(
                 productDto.getCode(),
                 productDto.getDescription()
         ));
     }
 
-    public boolean updateProduct(ProductDto productDto) throws SQLException, ClassNotFoundException {
+    public boolean updateProduct(ProductDto productDto) throws Exception {
 //        Connection connection = DBConnection.getInstance().getConnection();
 //        String sql = "UPDATE  product SET description = ? WHERE code = ?";
 //        PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -257,23 +257,23 @@ public class DatabaseAccessCode {
 //        preparedStatement.setInt(2, productDto.getCode());
 //
 //        return preparedStatement.executeUpdate() > 0;
-        return productDao.updateProduct(new Product(
+        return productDao.update(new Product(
                 productDto.getCode(),
                 productDto.getDescription()
         ));
     }
 
-    public boolean deleteProduct(int code) throws SQLException, ClassNotFoundException {
+    public boolean deleteProduct(int code) throws Exception {
 //        Connection connection = DBConnection.getInstance().getConnection();
 //        String sql = "DELETE FROM product WHERE code =?";
 //        PreparedStatement preparedStatement = connection.prepareStatement(sql);
 //        preparedStatement.setInt(1, code);
 //
 //        return preparedStatement.executeUpdate() > 0;
-        return productDao.deleteProduct(code);
+        return productDao.delete(code);
     }
 
-    public ProductDto findProduct(int code) throws SQLException, ClassNotFoundException {
+    public ProductDto findProduct(int code) throws Exception {
 //        Connection connection = DBConnection.getInstance().getConnection();
 //        String sql = "SELECT * FROM product WHERE code = ?";
 //        PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -286,7 +286,7 @@ public class DatabaseAccessCode {
 //            );
 //        }
 //        return null;
-        Product product = productDao.findProduct(code);
+        Product product = productDao.find(code);
         if (product != null) {
             return new ProductDto(
                     product.getCode(),
@@ -296,7 +296,7 @@ public class DatabaseAccessCode {
         return null;
     }
 
-    public List<ProductDto> findAllProduct() throws SQLException, ClassNotFoundException {
+    public List<ProductDto> findAllProduct() throws Exception {
 //        Connection connection = DBConnection.getInstance().getConnection();
 //        String sql = "SELECT * FROM product";
 //        PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -310,7 +310,7 @@ public class DatabaseAccessCode {
 //        }
 //        return productDTOList;
         List<ProductDto> productDtoList = new ArrayList<>();
-        for (Product p : productDao.findAllProduct()) {
+        for (Product p : productDao.findAll()) {
             productDtoList.add(new ProductDto(
                     p.getCode(),
                     p.getDescription()
@@ -339,7 +339,7 @@ public class DatabaseAccessCode {
 //        }
 //        return productDtoList;
         List<ProductDto> productDtoList = new ArrayList<>();
-        for (Product p : productDao.searchProduct(searchText)) {
+        for (Product p : productDao.searchByDescription(searchText)) {
             productDtoList.add(new ProductDto(
                     p.getCode(),
                     p.getDescription()

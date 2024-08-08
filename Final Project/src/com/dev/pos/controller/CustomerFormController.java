@@ -68,7 +68,7 @@ public class CustomerFormController {
         setUI("DashboardForm");
     }
 
-    public void btnSaveOnAction(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+    public void btnSaveOnAction(ActionEvent actionEvent) throws Exception {
 
         CustomerDTO dto = new CustomerDTO(
                 txtEmail.getText(),
@@ -150,7 +150,7 @@ public class CustomerFormController {
                             }else {
                                 new Alert(Alert.AlertType.ERROR, "Customer could not be deleted!").show();
                             }
-                        } catch (SQLException | ClassNotFoundException e) {
+                        } catch (Exception e) {
                             throw new RuntimeException(e);
                         }
                     }
@@ -160,7 +160,7 @@ public class CustomerFormController {
 
             tblCustomer.setItems(obList);
 
-        }catch (ClassNotFoundException | SQLException e){
+        }catch (Exception e){
             e.printStackTrace();
         }
     }
