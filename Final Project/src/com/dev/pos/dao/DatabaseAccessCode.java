@@ -10,6 +10,7 @@ import com.dev.pos.db.DBConnection;
 import com.dev.pos.dto.CustomerDTO;
 import com.dev.pos.dto.ProductDto;
 import com.dev.pos.dto.UserDTO;
+import com.dev.pos.entity.User;
 import com.dev.pos.util.security.PasswordManager;
 
 import java.sql.Connection;
@@ -27,7 +28,7 @@ public class DatabaseAccessCode {
 
     //-------------- User start---------
 
-    public static boolean createUser(UserDTO userDTO) throws SQLException, ClassNotFoundException {
+    public boolean createUser(UserDTO userDTO) throws SQLException, ClassNotFoundException {
 //        Connection connection = DBConnection.getInstance().getConnection();
 //        String sql = "INSERT INTO user VALUES(?,?)";
 //
@@ -36,10 +37,13 @@ public class DatabaseAccessCode {
 //        preparedStatement.setString(2, PasswordManager.encrypt(userDTO.getPassword()));
 //
 //        return preparedStatement.executeUpdate() > 0;
-        return false;
+        return userDao.saveUser(new User(
+                userDTO.getEmail(),
+                userDTO.getPassword()
+        ));
     }
 
-    public static UserDTO findUser(String email) throws SQLException, ClassNotFoundException {
+    public UserDTO findUser(String email) throws SQLException, ClassNotFoundException {
 //        Connection connection = DBConnection.getInstance().getConnection();
 //        String sql = "SELECT * FROM user WHERE email = ?";
 //
@@ -54,7 +58,11 @@ public class DatabaseAccessCode {
 //            );
 //        }
 //        return null;
-        return null;
+        User user = userDao.findUser(email);
+        return new UserDTO(
+                user.getEmail(),
+                user.getPassword()
+        );
     }
 
     //-------------- User end---------
