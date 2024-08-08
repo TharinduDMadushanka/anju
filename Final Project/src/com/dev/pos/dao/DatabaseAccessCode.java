@@ -11,6 +11,7 @@ import com.dev.pos.dto.CustomerDTO;
 import com.dev.pos.dto.ProductDto;
 import com.dev.pos.dto.UserDTO;
 import com.dev.pos.entity.Customer;
+import com.dev.pos.entity.Product;
 import com.dev.pos.entity.User;
 import com.dev.pos.util.security.PasswordManager;
 
@@ -215,14 +216,14 @@ public class DatabaseAccessCode {
                     c.getSalary()
             ));
         }
-
+        return customerDTOList;
     }
 
     //-------------- Customer end---------
 
     //-------------- Product Start---------
 
-    public static int getLastProductId() throws SQLException, ClassNotFoundException {
+    public int getLastProductId() throws SQLException, ClassNotFoundException {
 //        Connection connection = DBConnection.getInstance().getConnection();
 //        String sql = "SELECT code FROM  product ORDER BY code DESC LIMIT 1";
 //        PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -231,10 +232,10 @@ public class DatabaseAccessCode {
 //            return resultSet.getInt("code") + 1;
 //        }
 //        return 1;
-        return 0;
+        return productDao.getLastProductId();
     }
 
-    public static boolean saveProduct(ProductDto productDto) throws SQLException, ClassNotFoundException {
+    public boolean saveProduct(ProductDto productDto) throws SQLException, ClassNotFoundException {
 //        Connection connection = DBConnection.getInstance().getConnection();
 //        String sql = "INSERT INTO product VALUES(?,?)";
 //        PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -242,10 +243,13 @@ public class DatabaseAccessCode {
 //        preparedStatement.setString(2, productDto.getDescription());
 //
 //        return preparedStatement.executeUpdate() > 0;
-        return false;
+        return productDao.saveProduct(new Product(
+                productDto.getCode(),
+                productDto.getDescription()
+        ));
     }
 
-    public static boolean updateProduct(ProductDto productDto) throws SQLException, ClassNotFoundException {
+    public boolean updateProduct(ProductDto productDto) throws SQLException, ClassNotFoundException {
 //        Connection connection = DBConnection.getInstance().getConnection();
 //        String sql = "UPDATE  product SET description = ? WHERE code = ?";
 //        PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -253,20 +257,23 @@ public class DatabaseAccessCode {
 //        preparedStatement.setInt(2, productDto.getCode());
 //
 //        return preparedStatement.executeUpdate() > 0;
-        return false;
+        return productDao.updateProduct(new Product(
+                productDto.getCode(),
+                productDto.getDescription()
+        ));
     }
 
-    public static boolean deleteProduct(int code) throws SQLException, ClassNotFoundException {
+    public boolean deleteProduct(int code) throws SQLException, ClassNotFoundException {
 //        Connection connection = DBConnection.getInstance().getConnection();
 //        String sql = "DELETE FROM product WHERE code =?";
 //        PreparedStatement preparedStatement = connection.prepareStatement(sql);
 //        preparedStatement.setInt(1, code);
 //
 //        return preparedStatement.executeUpdate() > 0;
-        return false;
+        return productDao.deleteProduct(code);
     }
 
-    public static ProductDto findProduct(int code) throws SQLException, ClassNotFoundException {
+    public ProductDto findProduct(int code) throws SQLException, ClassNotFoundException {
 //        Connection connection = DBConnection.getInstance().getConnection();
 //        String sql = "SELECT * FROM product WHERE code = ?";
 //        PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -279,10 +286,17 @@ public class DatabaseAccessCode {
 //            );
 //        }
 //        return null;
+        Product product = productDao.findProduct(code);
+        if (product != null) {
+            return new ProductDto(
+                    product.getCode(),
+                    product.getDescription()
+            );
+        }
         return null;
     }
 
-    public static List<ProductDto> findAllProduct() throws SQLException, ClassNotFoundException {
+    public List<ProductDto> findAllProduct() throws SQLException, ClassNotFoundException {
 //        Connection connection = DBConnection.getInstance().getConnection();
 //        String sql = "SELECT * FROM product";
 //        PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -295,10 +309,17 @@ public class DatabaseAccessCode {
 //            ));
 //        }
 //        return productDTOList;
-        return null;
+        List<ProductDto> productDtoList = new ArrayList<>();
+        for (Product p : productDao.findAllProduct()) {
+            productDtoList.add(new ProductDto(
+                    p.getCode(),
+                    p.getDescription()
+            ));
+        }
+        return productDtoList;
     }
 
-    public static List<ProductDto> searchProduct(String searchText) throws SQLException, ClassNotFoundException {
+    public List<ProductDto> searchProduct(String searchText) throws SQLException, ClassNotFoundException {
 //        searchText = "%" + searchText + "%";
 //
 //        Connection connection = DBConnection.getInstance().getConnection();
@@ -317,8 +338,14 @@ public class DatabaseAccessCode {
 //            ));
 //        }
 //        return productDtoList;
-        return null;
-
+        List<ProductDto> productDtoList = new ArrayList<>();
+        for (Product p : productDao.searchProduct(searchText)) {
+            productDtoList.add(new ProductDto(
+                    p.getCode(),
+                    p.getDescription()
+            ));
+        }
+        return productDtoList;
     }
 
     //-------------- Product  end---------
