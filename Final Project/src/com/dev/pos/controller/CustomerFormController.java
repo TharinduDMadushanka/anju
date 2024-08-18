@@ -1,5 +1,9 @@
 package com.dev.pos.controller;
 
+import com.dev.pos.Enum.BoType;
+import com.dev.pos.bo.BoFactory;
+import com.dev.pos.bo.custom.CustomerBo;
+import com.dev.pos.bo.impl.CustomerBoImpl;
 import com.dev.pos.dao.DatabaseAccessCode;
 import com.dev.pos.dto.CustomerDTO;
 import com.dev.pos.dto.TM.CustomerTm;
@@ -33,6 +37,7 @@ public class CustomerFormController {
     public TableColumn<CustomerTm,Double>  colSalary;
     public TableColumn<CustomerTm,Button>  colDelete;
 
+    CustomerBo customerBo = BoFactory.getInstance().getBo(BoType.CUSTOMER);
 
     String searchText="";
 
@@ -78,12 +83,15 @@ public class CustomerFormController {
         );
 
         if (btnSave.getText().equalsIgnoreCase("Save Customer")) {
-            CustomerDTO customer = new DatabaseAccessCode().findCustomer(txtEmail.getText());
+//            CustomerDTO customer = new DatabaseAccessCode().findCustomer(txtEmail.getText());
+
+            CustomerDTO customer = customerBo.findCustomer(txtEmail.getText());
 
             if (customer != null) {
                 new Alert(Alert.AlertType.WARNING, "Customer is already saved!").show();
             } else {
-                boolean isSaved = new DatabaseAccessCode().createCustomer(dto);
+//                boolean isSaved = new DatabaseAccessCode().createCustomer(dto);
+                boolean isSaved = customerBo.saveCustomer(dto);
                 if (isSaved) {
                     new Alert(Alert.AlertType.INFORMATION, "Customer has been saved!").show();
                     clearFields();
@@ -92,7 +100,8 @@ public class CustomerFormController {
                 }
             }
         }else {
-            boolean isUpdated = new DatabaseAccessCode().updateCustomer(dto);
+//            boolean isUpdated = new DatabaseAccessCode().updateCustomer(dto);
+            boolean isUpdated = customerBo.updateCustomer(dto);
             if (isUpdated) {
                 new Alert(Alert.AlertType.INFORMATION, "Customer has been updated!").show();
                 txtEmail.setEditable(true);
@@ -122,7 +131,7 @@ public class CustomerFormController {
 
         try {
             int counter=1;
-            for (CustomerDTO dto : new DatabaseAccessCode().searchCustomer(searchText)) {
+            for (CustomerDTO dto : customerBo.searchCustomer(searchText)) {
                 Button button = new Button("Delete");
                 CustomerTm customerTm = new CustomerTm(
                         counter,
@@ -141,7 +150,8 @@ public class CustomerFormController {
                     Optional<ButtonType> buttonType = alert.showAndWait();
                     if (buttonType.get() == ButtonType.YES) {
                         try {
-                            boolean isDeleted = new DatabaseAccessCode().deleteCustomer(dto.getEmail());
+//                            boolean isDeleted = new DatabaseAccessCode().deleteCustomer(dto.getEmail());
+                            boolean isDeleted = customerBo.deleteCustomer(dto.getEmail());
                             if (isDeleted) {
                                 new Alert(Alert.AlertType.INFORMATION, "Customer has been deleted!").show();
                                 loadCustomer(searchText);
