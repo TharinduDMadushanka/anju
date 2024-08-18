@@ -1,5 +1,8 @@
 package com.dev.pos.controller;
 
+import com.dev.pos.Enum.BoType;
+import com.dev.pos.bo.BoFactory;
+import com.dev.pos.bo.custom.UserBo;
 import com.dev.pos.dao.DatabaseAccessCode;
 import com.dev.pos.db.DBConnection;
 import com.dev.pos.dto.UserDTO;
@@ -24,6 +27,8 @@ public class LoginFormController {
     public AnchorPane context;
     public TextField txtEmail;
     public PasswordField txtPassword;
+
+    UserBo userBo = BoFactory.getInstance().getBo(BoType.USER);
 
     public void btnLoginOnAction(ActionEvent actionEvent) {
 //        try{
@@ -53,7 +58,8 @@ public class LoginFormController {
 
        try{
 
-           UserDTO user = new DatabaseAccessCode().findUser(txtEmail.getText());
+//           UserDTO user = new DatabaseAccessCode().findUser(txtEmail.getText());
+           UserDTO user = userBo.findUser(txtEmail.getText());
 
            if(user != null){
                if(PasswordManager.checkPassword(txtPassword.getText(), user.getPassword())){
