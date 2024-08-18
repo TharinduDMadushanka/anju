@@ -1,5 +1,8 @@
 package com.dev.pos.controller;
 
+import com.dev.pos.Enum.BoType;
+import com.dev.pos.bo.BoFactory;
+import com.dev.pos.bo.custom.ProductBo;
 import com.dev.pos.dao.DatabaseAccessCode;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -38,6 +41,8 @@ public class ProductMainFormController {
     public TableColumn colMainDelete;
     public TextField txtSelectedDescription;
 
+    ProductBo productBo = BoFactory.getInstance().getBo(BoType.PRODUCT);
+
     public void initialize() {
         loadProductId();
     }
@@ -65,10 +70,12 @@ public class ProductMainFormController {
     private void loadProductId() {
 
         try {
-            txtProductCode.setText(String.valueOf(new DatabaseAccessCode().getLastProductId()));
+            txtProductCode.setText(String.valueOf(productBo.getLastProductId()));
         }catch (ClassNotFoundException e){
             e.printStackTrace();
         } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
