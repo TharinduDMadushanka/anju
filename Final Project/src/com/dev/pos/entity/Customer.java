@@ -1,6 +1,6 @@
 package com.dev.pos.entity;
 
-public class Customer {
+public class Customer implements SuperEntity{
     private String email;
     private String name;
     private String contact;

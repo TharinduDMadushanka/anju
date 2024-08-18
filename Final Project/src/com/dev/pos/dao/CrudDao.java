@@ -1,8 +1,10 @@
 package com.dev.pos.dao;
 
+import com.dev.pos.entity.SuperEntity;
+
 import java.util.List;
 
-public interface CrudDao<T, ID> extends SuperDao{
+public interface CrudDao<T extends SuperEntity, ID> extends SuperDao{
     public boolean save(T t) throws Exception,ClassNotFoundException;
 
     public boolean update(T t) throws Exception,ClassNotFoundException;
