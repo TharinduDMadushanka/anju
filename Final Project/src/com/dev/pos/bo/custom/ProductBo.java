@@ -1,12 +1,13 @@
 package com.dev.pos.bo.custom;
 
+import com.dev.pos.bo.SuperBo;
 import com.dev.pos.dto.ProductDto;
 import com.dev.pos.entity.Product;
 
 import java.sql.SQLException;
 import java.util.List;
 
-public interface ProductBo {
+public interface ProductBo extends SuperBo {
 
     public boolean saveProduct(ProductDto productDto) throws Exception;
 
