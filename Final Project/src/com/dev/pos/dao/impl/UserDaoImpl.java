@@ -1,5 +1,6 @@
 package com.dev.pos.dao.impl;
 
+import com.dev.pos.dao.CrudUtil;
 import com.dev.pos.dao.custom.UserDao;
 import com.dev.pos.db.DBConnection;
 import com.dev.pos.dto.UserDTO;
@@ -16,6 +17,11 @@ import java.util.List;
 public class UserDaoImpl implements UserDao {
     @Override
     public boolean save(User user) throws SQLException, ClassNotFoundException {
+
+        String sql = "INSERT INTO user VALUES(?,?)";
+        return CrudUtil.execute(sql,user.getEmail(), PasswordManager.encrypt(user.getPassword()));
+
+        /**
         Connection connection = DBConnection.getInstance().getConnection();
         String sql = "INSERT INTO user VALUES(?,?)";
 
@@ -24,6 +30,8 @@ public class UserDaoImpl implements UserDao {
         preparedStatement.setString(2, PasswordManager.encrypt(user.getPassword()));
 
         return preparedStatement.executeUpdate() > 0;
+
+         */
     }
 
     @Override
@@ -38,6 +46,20 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User find(String email) throws SQLException, ClassNotFoundException {
+
+        String sql = "SELECT * FROM user WHERE email = ?";
+
+        ResultSet resultSet = CrudUtil.execute(sql,email);
+
+        if (resultSet.next()) {
+            return new User(
+                    resultSet.getString(1),
+                    resultSet.getString(2)
+            );
+        }
+        return null;
+
+        /**
         Connection connection = DBConnection.getInstance().getConnection();
         String sql = "SELECT * FROM user WHERE email = ?";
 
@@ -52,6 +74,7 @@ public class UserDaoImpl implements UserDao {
             );
         }
         return null;
+         */
     }
 
     @Override
