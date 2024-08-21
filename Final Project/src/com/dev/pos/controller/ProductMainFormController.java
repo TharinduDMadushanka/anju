@@ -62,7 +62,11 @@ public class ProductMainFormController {
 
         loadAllProduct(searchText);
 
-        tblProduct.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<ProductTm>() {})
+        tblProduct.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                setData(newValue);
+            }
+        });
     }
 
     public void btnBacktoHome(ActionEvent actionEvent) throws IOException {
@@ -86,6 +90,7 @@ public class ProductMainFormController {
                     new Alert(Alert.AlertType.INFORMATION,"Product saved successfully").show();
                     loadAllProduct(searchText);
                     loadProductId();
+                    clear();
                 }else {
                     new Alert(Alert.AlertType.ERROR,"Something wrong in save..!").show();
                 }
@@ -100,6 +105,7 @@ public class ProductMainFormController {
                     new Alert(Alert.AlertType.INFORMATION,"Product updated successfully").show();
                     loadAllProduct(searchText);
                     loadProductId();
+                    clear();
                     btnSave.setText("Save Product");
                 }else {
                     new Alert(Alert.AlertType.ERROR,"Something wrong in update..!").show();
@@ -167,5 +173,11 @@ public class ProductMainFormController {
         txtSelectedProductCode.setText(String.valueOf(newValue.getCode()));
         txtProductDescription.setText(newValue.getDescription());
         txtSelectedDescription.setText(newValue.getDescription());
+    }
+
+    private void clear(){
+        txtProductDescription.clear();
+        txtSelectedProductCode.clear();
+        txtSelectedDescription.clear();
     }
 }
