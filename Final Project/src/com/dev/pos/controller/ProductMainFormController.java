@@ -73,7 +73,7 @@ public class ProductMainFormController {
 
         try {
 
-            if(btnSave.getText().equalsIgnoreCase("save products")) {
+            if(btnSave.getText().equalsIgnoreCase("Save Product")) {
                 boolean isSaved = productBo.saveProduct(new ProductDto(
                         Integer.parseInt(txtProductCode.getText()),
                         txtProductDescription.getText()
