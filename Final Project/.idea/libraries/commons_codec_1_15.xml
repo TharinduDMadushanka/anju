@@ -1,0 +1,16 @@
+<component name="libraryTable">
+  <library name="commons-codec-1.15">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/QR/commons-codec-1.15.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/QR/core-3.5.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/QR/jai-imageio-core-1.4.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/QR/javase-3.5.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/QR/jcommander-1.82.jar!/" />
+      <root url="file://$PROJECT_DIR$" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/src" />
+    </SOURCES>
+  </library>
+</component>
