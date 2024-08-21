@@ -6,6 +6,7 @@ import com.dev.pos.bo.custom.ProductBo;
 import com.dev.pos.dao.DatabaseAccessCode;
 import com.dev.pos.dto.ProductDto;
 import com.dev.pos.dto.TM.ProductTm;
+import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -60,6 +61,8 @@ public class ProductMainFormController {
         colDelete.setCellValueFactory(new PropertyValueFactory<>("deleteBtn"));
 
         loadAllProduct(searchText);
+
+        tblProduct.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<ProductTm>() {})
     }
 
     public void btnBacktoHome(ActionEvent actionEvent) throws IOException {
@@ -84,7 +87,22 @@ public class ProductMainFormController {
                     loadAllProduct(searchText);
                     loadProductId();
                 }else {
-                    new Alert(Alert.AlertType.ERROR,"Something went wrong").show();
+                    new Alert(Alert.AlertType.ERROR,"Something wrong in save..!").show();
+                }
+            }else {
+
+                boolean updated = productBo.updateProduct(new ProductDto(
+                        Integer.parseInt(txtProductCode.getText()),
+                        txtProductDescription.getText()
+                ));
+
+                if(updated) {
+                    new Alert(Alert.AlertType.INFORMATION,"Product updated successfully").show();
+                    loadAllProduct(searchText);
+                    loadProductId();
+                    btnSave.setText("Save Product");
+                }else {
+                    new Alert(Alert.AlertType.ERROR,"Something wrong in update..!").show();
                 }
 
             }
@@ -141,7 +159,13 @@ public class ProductMainFormController {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
     }
 
+    private void setData(ProductTm newValue) {
+        btnSave.setText("Update Product");
+        txtProductCode.setText(String.valueOf(newValue.getCode()));
+        txtSelectedProductCode.setText(String.valueOf(newValue.getCode()));
+        txtProductDescription.setText(newValue.getDescription());
+        txtSelectedDescription.setText(newValue.getDescription());
+    }
 }
