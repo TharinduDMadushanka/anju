@@ -12,10 +12,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -73,6 +70,31 @@ public class ProductMainFormController {
     }
 
     public void btnSaveOnAction(ActionEvent actionEvent) {
+
+        try {
+
+            if(btnSave.getText().equalsIgnoreCase("save products")) {
+                boolean isSaved = productBo.saveProduct(new ProductDto(
+                        Integer.parseInt(txtProductCode.getText()),
+                        txtProductDescription.getText()
+                ));
+
+                if(isSaved) {
+                    new Alert(Alert.AlertType.INFORMATION,"Product saved successfully").show();
+                    loadAllProduct(searchText);
+                    loadProductId();
+                }else {
+                    new Alert(Alert.AlertType.ERROR,"Something went wrong").show();
+                }
+
+            }
+
+        }catch (SQLException | ClassNotFoundException e){
+            e.printStackTrace();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     public void btnNewBatchOnAction(ActionEvent actionEvent) {
