@@ -57,6 +57,8 @@ public class NewBatchFormController {
     @FXML
     private TextField txtShowPrice;
 
+    String uniqueData = null;
+
     public void initialize() {
         try {
             setQRcode();
@@ -72,7 +74,7 @@ public class NewBatchFormController {
 
     private void setQRcode() throws WriterException {
 
-        String uniqueData = QRdataGenerator.generate(30);
+        uniqueData = QRdataGenerator.generate(30);
 
 //        System.out.println(QRdataGenerator.generate(30));
         QRCodeWriter qrCodeWriter = new QRCodeWriter();
@@ -87,7 +89,11 @@ public class NewBatchFormController {
 
         Image image = SwingFXUtils.toFXImage(bufferedImage, null);
         imgQR.setImage(image);
+    }
 
+    public void setProductCode(int code, String description) {
+        txtProductCode.setText(String.valueOf(code));
+        txtDescription.setText(description);
     }
 
 }

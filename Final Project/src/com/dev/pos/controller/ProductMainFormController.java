@@ -126,11 +126,22 @@ public class ProductMainFormController {
 
     public void btnNewBatchOnAction(ActionEvent actionEvent) throws IOException {
 
-        Stage stage = new Stage();
-        Parent load = FXMLLoader.load(getClass().getResource("../view/NewBatchForm.fxml"));
-        stage.setScene(new Scene(load));
-        stage.show();
-        stage.centerOnScreen();
+
+        if (txtProductCode.getText().trim().length() > 0) {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../view/NewBatchForm.fxml"));
+            Parent parent = fxmlLoader.load();
+            NewBatchFormController controller = fxmlLoader.getController();
+            controller.setProductCode(
+                    Integer.parseInt(txtSelectedProductCode.getText()),
+                    txtSelectedDescription.getText()
+            );
+            Stage stage = new Stage();
+            stage.setScene(new Scene(parent));
+            stage.show();
+            stage.centerOnScreen();
+        }else {
+            new Alert(Alert.AlertType.WARNING,"Please select valid product..!").show();
+        }
 
     }
 
