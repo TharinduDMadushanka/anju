@@ -12,6 +12,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -123,7 +124,14 @@ public class ProductMainFormController {
 
     }
 
-    public void btnNewBatchOnAction(ActionEvent actionEvent) {
+    public void btnNewBatchOnAction(ActionEvent actionEvent) throws IOException {
+
+        Stage stage = new Stage();
+        Parent load = FXMLLoader.load(getClass().getResource("../view/NewBatchForm.fxml"));
+        stage.setScene(new Scene(load));
+        stage.show();
+        stage.centerOnScreen();
+
     }
 
     private void setUI(String location) throws IOException {
