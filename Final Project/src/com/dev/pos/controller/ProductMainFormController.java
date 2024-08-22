@@ -47,6 +47,7 @@ public class ProductMainFormController {
     public TableColumn colMainDelete;
 
     public TextField txtSelectedDescription;
+    @FXML
     private Button btnNewBatch;
 
     ProductBo productBo = BoFactory.getInstance().getBo(BoType.PRODUCT);
