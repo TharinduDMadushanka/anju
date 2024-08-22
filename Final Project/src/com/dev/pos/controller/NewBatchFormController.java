@@ -48,8 +48,16 @@ public class NewBatchFormController {
     @FXML
     private TextField txtShowPrice;
 
+    public void initialize() {
+        setQRcode();
+    }
+
     @FXML
     void btnSaveOnAction(ActionEvent event) {
+
+    }
+
+    private void setQRcode() {
 
     }
 
