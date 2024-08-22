@@ -1,14 +1,79 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.dev.pos.controller.NewBatchFormController"
-            prefHeight="400.0" prefWidth="600.0">
 
+<AnchorPane fx:id="context" prefHeight="561.0" prefWidth="666.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dev.pos.controller.NewBatchFormController">
+   <children>
+      <Label layoutX="34.0" layoutY="33.0" prefHeight="35.0" prefWidth="279.0" text="Batch Management">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Label>
+      <Separator layoutX="14.0" layoutY="82.0" prefHeight="8.0" prefWidth="618.0" />
+      <ImageView fx:id="imgQR" fitHeight="228.0" fitWidth="259.0" layoutX="34.0" layoutY="103.0" pickOnBounds="true" preserveRatio="true" />
+      <TextField fx:id="txtQTy" editable="false" layoutX="364.0" layoutY="103.0" prefHeight="37.0" prefWidth="192.0" promptText="QTY">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="txtBuyingPrice" editable="false" layoutX="364.0" layoutY="159.0" prefHeight="37.0" prefWidth="192.0" promptText="Buying Price">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="txtShowPrice" editable="false" layoutX="364.0" layoutY="212.0" prefHeight="37.0" prefWidth="192.0" promptText="Show Price">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="txtSellingPrice" editable="false" layoutX="364.0" layoutY="267.0" prefHeight="37.0" prefWidth="192.0" promptText="Selling Price">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </TextField>
+      <Label layoutX="364.0" layoutY="320.0" prefHeight="27.0" prefWidth="95.0" text="Discount" textFill="#0c12b1">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Label>
+      <RadioButton fx:id="rdNo" layoutX="459.0" layoutY="325.0" mnemonicParsing="false" selected="true" text="No">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+         <toggleGroup>
+            <ToggleGroup fx:id="discount" />
+         </toggleGroup>
+      </RadioButton>
+      <RadioButton fx:id="rdYes" layoutX="517.0" layoutY="325.0" mnemonicParsing="false" text="Yes" toggleGroup="$discount">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </RadioButton>
+      <TextField fx:id="txtProductCode" editable="false" layoutX="34.0" layoutY="347.0" prefHeight="37.0" prefWidth="192.0" promptText="Product Code">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </TextField>
+      <TextArea fx:id="txtDescription" layoutX="34.0" layoutY="397.0" prefHeight="122.0" prefWidth="367.0" promptText="Product Description">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </TextArea>
+      <Button fx:id="btnSave" layoutX="472.0" layoutY="481.0" mnemonicParsing="false" onAction="#btnSaveOnAction" prefHeight="37.0" prefWidth="166.0" text="Save Batch">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+   </children>
 </AnchorPane>
