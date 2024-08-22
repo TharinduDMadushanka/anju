@@ -47,6 +47,7 @@ public class ProductMainFormController {
     public TableColumn colMainDelete;
 
     public TextField txtSelectedDescription;
+    private Button btnNewBatch;
 
     ProductBo productBo = BoFactory.getInstance().getBo(BoType.PRODUCT);
 
@@ -168,6 +169,7 @@ public class ProductMainFormController {
     }
 
     private void setData(ProductTm newValue) {
+        btnNewBatch.setDisable(false);
         btnSave.setText("Update Product");
         txtProductCode.setText(String.valueOf(newValue.getCode()));
         txtSelectedProductCode.setText(String.valueOf(newValue.getCode()));
