@@ -5,7 +5,9 @@ import com.dev.pos.bo.BoFactory;
 import com.dev.pos.bo.custom.BatchBo;
 import com.dev.pos.bo.custom.ProductBo;
 import com.dev.pos.dao.DatabaseAccessCode;
+import com.dev.pos.dto.BatchDTO;
 import com.dev.pos.dto.ProductDto;
+import com.dev.pos.dto.TM.BatchTm;
 import com.dev.pos.dto.TM.ProductTm;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
@@ -23,6 +25,7 @@ import javafx.stage.Window;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 
 public class ProductMainFormController {
     public AnchorPane context;
@@ -39,14 +42,14 @@ public class ProductMainFormController {
 
     public TextField txtSelectedProductCode;
 
-    public TableView tblProductMain;
-    public TableColumn colNo;
-    public TableColumn colQty;
-    public TableColumn colBuyPrice;
-    public TableColumn colDiscount;
-    public TableColumn colShowPrice;
-    public TableColumn colSellPrice;
-    public TableColumn colMainDelete;
+    public TableView<BatchTm> tblProductMain;
+    public TableColumn<BatchTm, String> colNo;
+    public TableColumn<BatchTm, Integer> colQty;
+    public TableColumn<BatchTm, Double> colBuyPrice;
+    public TableColumn<BatchTm, String> colDiscount;
+    public TableColumn<BatchTm, Double> colShowPrice;
+    public TableColumn<BatchTm, Double> colSellPrice;
+    public TableColumn<BatchTm,Button> colMainDelete;
 
     public TextField txtSelectedDescription;
     @FXML
@@ -209,7 +212,34 @@ public class ProductMainFormController {
 
     private void loadBatchData(int code){
 
+        try{
 
+            ObservableList<BatchTm> oblist = FXCollections.observableArrayList();
+            List<BatchDTO> allBatch = batchBo.findAllBatch(code);
+
+            if (allBatch != null){
+                for (BatchDTO b : allBatch){
+
+                    Button button = new Button("Delete");
+                    BatchTm batchTm = new BatchTm(
+                            b.getCode(),
+                            b.getQtyOnHand(),
+                            b.getBuyingPrice(),
+                            b.isAvailable(),
+                            b.getShowPrice(),
+                            b.getSellingPrice(),
+                            button
+                    );
+                    oblist.add(batchTm);
+                }
+                tblProductMain.setItems(oblist);
+            }
+
+        }catch (SQLException | ClassNotFoundException e){
+            e.printStackTrace();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
 
     }
 
