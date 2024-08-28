@@ -68,6 +68,14 @@ public class ProductMainFormController {
         colShowMore.setCellValueFactory(new PropertyValueFactory<>("showMoreBtn"));
         colDelete.setCellValueFactory(new PropertyValueFactory<>("deleteBtn"));
 
+        colNo.setCellValueFactory(new PropertyValueFactory<>("code"));
+        colQty.setCellValueFactory(new PropertyValueFactory<>("qty"));
+        colBuyPrice.setCellValueFactory(new PropertyValueFactory<>("byingPrice"));
+        colDiscount.setCellValueFactory(new PropertyValueFactory<>("discount"));
+        colShowPrice.setCellValueFactory(new PropertyValueFactory<>("showPrice"));
+        colSellPrice.setCellValueFactory(new PropertyValueFactory<>("sellingPrice"));
+        colMainDelete.setCellValueFactory(new PropertyValueFactory<>("button"));
+
         loadAllProduct(searchText);
 
         tblProduct.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
@@ -202,6 +210,9 @@ public class ProductMainFormController {
         txtSelectedProductCode.setText(String.valueOf(newValue.getCode()));
         txtProductDescription.setText(newValue.getDescription());
         txtSelectedDescription.setText(newValue.getDescription());
+
+        loadBatchData(newValue.getCode());
+
     }
 
     private void clear(){
