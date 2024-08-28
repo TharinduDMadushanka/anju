@@ -2,6 +2,7 @@ package com.dev.pos.dao;
 
 import com.dev.pos.Enum.DaoType;
 import com.dev.pos.dao.custom.CustomerDao;
+import com.dev.pos.dao.impl.BatchDaoImpl;
 import com.dev.pos.dao.impl.CustomerDaoImpl;
 import com.dev.pos.dao.impl.ProductDaoImpl;
 import com.dev.pos.dao.impl.UserDaoImpl;
@@ -29,6 +30,8 @@ public class DaoFactory {
                 return new UserDaoImpl();
             case PRODUCT:
                 return new ProductDaoImpl();
+            case BATCH:
+                return new BatchDaoImpl();
             default:
                 return null;
         }

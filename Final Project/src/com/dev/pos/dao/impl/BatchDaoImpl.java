@@ -9,7 +9,9 @@ import java.util.List;
 public class BatchDaoImpl implements BatchDao {
     @Override
     public boolean save(Batch batch) throws Exception, ClassNotFoundException {
-        return false;
+
+
+
     }
 
     @Override
