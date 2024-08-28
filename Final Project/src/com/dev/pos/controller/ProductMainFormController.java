@@ -207,7 +207,9 @@ public class ProductMainFormController {
         txtSelectedDescription.clear();
     }
 
-    private void loadBatchData(){
+    private void loadBatchData(int code){
+
+
 
     }
 
