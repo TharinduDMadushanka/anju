@@ -11,4 +11,5 @@ public interface BatchBo extends SuperBo {
 
     public List<BatchDTO> findAllBatch(int productCode) throws Exception;
 
+    public BatchDTO findBatch(String code) throws Exception;
 }

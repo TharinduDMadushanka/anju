@@ -35,10 +35,10 @@ public class ProductMainFormController {
     public TextField txtSearch;
 
     public TableView<ProductTm> tblProduct;
-    public TableColumn<ProductTm,Integer> colProductId;
-    public TableColumn<ProductTm,String> colDescription;
-    public TableColumn<ProductTm,Button> colShowMore;
-    public TableColumn<ProductTm,Button> colDelete;
+    public TableColumn<ProductTm, Integer> colProductId;
+    public TableColumn<ProductTm, String> colDescription;
+    public TableColumn<ProductTm, Button> colShowMore;
+    public TableColumn<ProductTm, Button> colDelete;
 
     public TextField txtSelectedProductCode;
 
@@ -49,7 +49,7 @@ public class ProductMainFormController {
     public TableColumn<BatchTm, String> colDiscount;
     public TableColumn<BatchTm, Double> colShowPrice;
     public TableColumn<BatchTm, Double> colSellPrice;
-    public TableColumn<BatchTm,Button> colMainDelete;
+    public TableColumn<BatchTm, Button> colMainDelete;
 
     public TextField txtSelectedDescription;
     @FXML
@@ -83,6 +83,17 @@ public class ProductMainFormController {
                 setData(newValue);
             }
         });
+
+        tblProductMain.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                try {
+                    loadExternalUI(true,newValue);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+
     }
 
     public void btnBacktoHome(ActionEvent actionEvent) throws IOException {
@@ -90,46 +101,47 @@ public class ProductMainFormController {
     }
 
     public void btnAddNewProductOnAction(ActionEvent actionEvent) {
+
     }
 
     public void btnSaveOnAction(ActionEvent actionEvent) {
 
         try {
 
-            if(btnSave.getText().equalsIgnoreCase("Save Product")) {
+            if (btnSave.getText().equalsIgnoreCase("Save Product")) {
                 boolean isSaved = productBo.saveProduct(new ProductDto(
                         Integer.parseInt(txtProductCode.getText()),
                         txtProductDescription.getText()
                 ));
 
-                if(isSaved) {
-                    new Alert(Alert.AlertType.INFORMATION,"Product saved successfully").show();
+                if (isSaved) {
+                    new Alert(Alert.AlertType.INFORMATION, "Product saved successfully").show();
                     loadAllProduct(searchText);
                     loadProductId();
                     clear();
-                }else {
-                    new Alert(Alert.AlertType.ERROR,"Something wrong in save..!").show();
+                } else {
+                    new Alert(Alert.AlertType.ERROR, "Something wrong in save..!").show();
                 }
-            }else {
+            } else {
 
                 boolean updated = productBo.updateProduct(new ProductDto(
                         Integer.parseInt(txtProductCode.getText()),
                         txtProductDescription.getText()
                 ));
 
-                if(updated) {
-                    new Alert(Alert.AlertType.INFORMATION,"Product updated successfully").show();
+                if (updated) {
+                    new Alert(Alert.AlertType.INFORMATION, "Product updated successfully").show();
                     loadAllProduct(searchText);
                     loadProductId();
                     clear();
                     btnSave.setText("Save Product");
-                }else {
-                    new Alert(Alert.AlertType.ERROR,"Something wrong in update..!").show();
+                } else {
+                    new Alert(Alert.AlertType.ERROR, "Something wrong in update..!").show();
                 }
 
             }
 
-        }catch (SQLException | ClassNotFoundException e){
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -140,29 +152,31 @@ public class ProductMainFormController {
     public void btnNewBatchOnAction(ActionEvent actionEvent) throws IOException {
 
 
-        if (txtSelectedProductCode.getText().trim().length() > 0) {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../view/NewBatchForm.fxml"));
-            Parent parent = fxmlLoader.load();
-            NewBatchFormController controller = fxmlLoader.getController();
-            Stage stage = new Stage();
-            controller.setProductCode(
-                    Integer.parseInt(txtSelectedProductCode.getText()),
-                    txtSelectedDescription.getText(),
-                    stage
-            );
+//        if (txtSelectedProductCode.getText().trim().length() > 0) {
+//            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../view/NewBatchForm.fxml"));
+//            Parent parent = fxmlLoader.load();
+//            NewBatchFormController controller = fxmlLoader.getController();
 //            Stage stage = new Stage();
-            stage.setScene(new Scene(parent));
-            stage.show();
-            stage.centerOnScreen();
-        }else {
-            new Alert(Alert.AlertType.WARNING,"Please select valid product..!").show();
-        }
+//            controller.setProductCode(
+//                    Integer.parseInt(txtSelectedProductCode.getText()),
+//                    txtSelectedDescription.getText(),
+//                    stage
+//            );
+////            Stage stage = new Stage();
+//            stage.setScene(new Scene(parent));
+//            stage.show();
+//            stage.centerOnScreen();
+//        } else {
+//            new Alert(Alert.AlertType.WARNING, "Please select valid product..!").show();
+//        }
+
+        loadExternalUI(false,null);
 
     }
 
     private void setUI(String location) throws IOException {
         Stage stage = (Stage) context.getScene().getWindow();
-        stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("../view/"+location+".fxml"))));
+        stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("../view/" + location + ".fxml"))));
         stage.show();
         stage.centerOnScreen();
     }
@@ -171,7 +185,7 @@ public class ProductMainFormController {
 
         try {
             txtProductCode.setText(String.valueOf(productBo.getLastProductId()));
-        }catch (ClassNotFoundException e){
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -181,12 +195,12 @@ public class ProductMainFormController {
 
     }
 
-    private void loadAllProduct(String searchText){
+    private void loadAllProduct(String searchText) {
 
         ObservableList<ProductTm> oblist = FXCollections.observableArrayList();
 
-        try{
-            for (ProductDto p : productBo.findAllProduct()){
+        try {
+            for (ProductDto p : productBo.findAllProduct()) {
                 Button showMore = new Button("Show More");
                 Button delete = new Button("Delete");
                 ProductTm productTm = new ProductTm(
@@ -215,22 +229,23 @@ public class ProductMainFormController {
 
     }
 
-    private void clear(){
+    private void clear() {
         txtProductDescription.clear();
         txtSelectedProductCode.clear();
         txtSelectedDescription.clear();
     }
 
-    private void loadBatchData(int code){
+    private void loadBatchData(int code) {
 
-        try{
+        try {
 
             ObservableList<BatchTm> oblist = FXCollections.observableArrayList();
+
             List<BatchDTO> allBatch = batchBo.findAllBatch(code);
 
-            if (allBatch != null){
-                for (BatchDTO b : allBatch){
+            if (allBatch != null) {
 
+                for (BatchDTO b : allBatch) {
                     Button button = new Button("Delete");
                     BatchTm batchTm = new BatchTm(
                             b.getCode(),
@@ -246,11 +261,39 @@ public class ProductMainFormController {
                 tblProductMain.setItems(oblist);
             }
 
-        }catch (SQLException | ClassNotFoundException e){
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private void loadExternalUI(boolean state, BatchTm tm) throws IOException {
+
+        if (txtSelectedProductCode.getText().trim().length() > 0) {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../view/NewBatchForm.fxml"));
+            Parent parent = fxmlLoader.load();
+            NewBatchFormController controller = fxmlLoader.getController();
+            Stage stage = new Stage();
+            controller.setProductCode(
+                    Integer.parseInt(txtSelectedProductCode.getText()),
+                    txtSelectedDescription.getText(),
+                    stage,
+                    state,
+                    tm
+            );
+
+            stage.setScene(new Scene(parent));
+            stage.show();
+            stage.centerOnScreen();
+
+
+
+        } else {
+            new Alert(Alert.AlertType.WARNING, "Please select valid product..!").show();
+        }
+
+
 
     }
 

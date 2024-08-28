@@ -2,6 +2,7 @@ package com.dev.pos.bo;
 
 import com.dev.pos.Enum.BoType;
 import com.dev.pos.bo.custom.ProductBo;
+import com.dev.pos.bo.impl.BatchBoImpl;
 import com.dev.pos.bo.impl.CustomerBoImpl;
 import com.dev.pos.bo.impl.ProductBoImpl;
 import com.dev.pos.bo.impl.UserBoImpl;
@@ -27,6 +28,8 @@ public class BoFactory {
                 return (T) new CustomerBoImpl();
             case USER:
                 return (T) new UserBoImpl();
+            case BATCH:
+                return (T) new BatchBoImpl();
             default:
                 return null;
         }

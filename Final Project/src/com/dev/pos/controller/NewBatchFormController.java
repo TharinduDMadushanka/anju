@@ -4,6 +4,7 @@ import com.dev.pos.Enum.BoType;
 import com.dev.pos.bo.BoFactory;
 import com.dev.pos.bo.custom.BatchBo;
 import com.dev.pos.dto.BatchDTO;
+import com.dev.pos.dto.TM.BatchTm;
 import com.dev.pos.util.QR.QRdataGenerator;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
@@ -23,6 +24,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class NewBatchFormController {
 
@@ -104,12 +106,12 @@ public class NewBatchFormController {
 
             boolean isSaved = batchBo.saveBatch(dto);
 
-            if (isSaved){
-                new Alert(Alert.AlertType.INFORMATION,"Batch has been Saved").show();
+            if (isSaved) {
+                new Alert(Alert.AlertType.INFORMATION, "Batch has been Saved").show();
                 Thread.sleep(3000);
                 this.stage.close();
-            }else {
-                new Alert(Alert.AlertType.ERROR,"Batch has not been Saved").show();
+            } else {
+                new Alert(Alert.AlertType.ERROR, "Batch has not been Saved").show();
             }
 
         } catch (IOException e) {
@@ -139,10 +141,29 @@ public class NewBatchFormController {
         imgQR.setImage(image);
     }
 
-    public void setProductCode(int code, String description, Stage stage) {
-        txtProductCode.setText(String.valueOf(code));
-        txtDescription.setText(description);
-        this.stage = stage;
-    }
+    public void setProductCode(int code, String description, Stage stage, boolean state, BatchTm tm) {
 
+        this.stage = stage;
+
+        try {
+
+            if (state) {
+                //load
+                batchBo.findBatch(tm.getCode());
+                txtQTy.setText(String.valueOf(tm.getQty()));
+                txtBuyingPrice.setText(String.valueOf(tm.getByingPrice()));
+                txtSellingPrice.setText(String.valueOf(tm.getSellingPrice()));
+                txtShowPrice.setText(String.valueOf(tm.getShowPrice()));
+                discount.setUserData(tm.isDiscount());
+
+                txtProductCode.setText(String.valueOf(code));
+                txtDescription.setText(description);
+
+            } else {
+                stage.close();
+            }
+        } catch ( Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
