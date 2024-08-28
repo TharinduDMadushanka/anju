@@ -82,10 +82,11 @@ public class NewBatchFormController {
 
         try {
 
+            // conver bufferedImage in to byte array for save as a string
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
-
             javax.imageio.ImageIO.write(bufferedImage, "png", baos);
             byte[] arr = baos.toByteArray();
+
             String barcode = Base64.encodeBase64String(arr);
 
 

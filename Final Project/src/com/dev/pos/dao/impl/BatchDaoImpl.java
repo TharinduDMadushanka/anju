@@ -4,10 +4,12 @@ import com.dev.pos.dao.CrudUtil;
 import com.dev.pos.dao.custom.BatchDao;
 import com.dev.pos.entity.Batch;
 
+import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
 
 public class BatchDaoImpl implements BatchDao {
+
     @Override
     public boolean save(Batch batch) throws Exception, ClassNotFoundException {
 
@@ -49,4 +51,12 @@ public class BatchDaoImpl implements BatchDao {
     public List<Batch> search(String s) throws Exception, ClassNotFoundException {
         return Collections.emptyList();
     }
+
+    @Override
+    public List<Batch> findAllBatch(int productCode) throws SQLException, ClassNotFoundException {
+
+        String sql = "SELECT * FROM batch WHERE product_code1 = ?";
+        return CrudUtil.execute(sql,productCode);
+    }
+
 }
