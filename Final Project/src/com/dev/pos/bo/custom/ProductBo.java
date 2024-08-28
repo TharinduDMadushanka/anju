@@ -25,4 +25,6 @@ public interface ProductBo extends SuperBo {
 
     public List<ProductDto> searchByDescription(String value) throws Exception;
 
+
+
 }

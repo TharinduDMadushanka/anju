@@ -7,6 +7,9 @@ import com.dev.pos.dao.custom.BatchDao;
 import com.dev.pos.dto.BatchDTO;
 import com.dev.pos.entity.Batch;
 
+import java.util.Collections;
+import java.util.List;
+
 public class BatchBoImpl implements BatchBo {
 
     BatchDao batchDao = (BatchDao) DaoFactory.getInstance().getDao(DaoType.BATCH);
@@ -25,5 +28,10 @@ public class BatchBoImpl implements BatchBo {
                 dto.getProductCode()
         ));
 
+    }
+
+    @Override
+    public List<BatchDTO> findAllBatch(int productCode) throws Exception {
+        return Collections.emptyList();
     }
 }
