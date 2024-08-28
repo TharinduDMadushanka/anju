@@ -12,14 +12,11 @@ import com.google.zxing.qrcode.QRCodeWriter;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import org.apache.commons.codec.binary.Base64;
 
 import java.awt.image.BufferedImage;
@@ -70,6 +67,8 @@ public class NewBatchFormController {
     String uniqueData = null;
     BufferedImage bufferedImage = null;
 
+    Stage stage = new Stage();
+
     public void initialize() {
         try {
             setQRcode();
@@ -102,7 +101,15 @@ public class NewBatchFormController {
 
             );
 
-            batchBo.saveBatch(dto);
+            boolean isSaved = batchBo.saveBatch(dto);
+
+            if (isSaved){
+                new Alert(Alert.AlertType.INFORMATION,"Batch has been Saved").show();
+                Thread.sleep(3000);
+                this.stage.close();
+            }else {
+                new Alert(Alert.AlertType.ERROR,"Batch has not been Saved").show();
+            }
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -131,9 +138,10 @@ public class NewBatchFormController {
         imgQR.setImage(image);
     }
 
-    public void setProductCode(int code, String description) {
+    public void setProductCode(int code, String description, Stage stage) {
         txtProductCode.setText(String.valueOf(code));
         txtDescription.setText(description);
+        this.stage = stage;
     }
 
 }
