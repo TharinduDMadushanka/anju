@@ -2,6 +2,8 @@ package com.dev.pos.dao.impl;
 
 import com.dev.pos.dao.CrudUtil;
 import com.dev.pos.dao.custom.BatchDao;
+import com.dev.pos.dto.BatchDTO;
+import com.dev.pos.dto.ProductDetailJoinDTO;
 import com.dev.pos.entity.Batch;
 
 import java.sql.ResultSet;
@@ -91,6 +93,31 @@ public class BatchDaoImpl implements BatchDao {
             ));
         }
         return list;
+    }
+
+    @Override
+    public ProductDetailJoinDTO findProductDetailJoinData(String code) throws SQLException, ClassNotFoundException {
+
+        String sql = "SELECT * FROM batch b JOIN product p ON b.code=? AND b.product_code1  = p.code";
+        ResultSet resultSet = CrudUtil.execute(sql, code);
+
+        if (resultSet.next()) {
+            return new ProductDetailJoinDTO(
+                    resultSet.getInt(9),
+                    resultSet.getString(10),
+                    new BatchDTO(
+                            resultSet.getString(1),
+                            resultSet.getString(2),
+                            resultSet.getInt(3),
+                            resultSet.getDouble(4),
+                            resultSet.getBoolean(5),
+                            resultSet.getDouble(6),
+                            resultSet.getDouble(7),
+                            resultSet.getInt(8)
+                    )
+            );
+        }
+        return null;
     }
 
 }

@@ -5,6 +5,7 @@ import com.dev.pos.bo.custom.BatchBo;
 import com.dev.pos.dao.DaoFactory;
 import com.dev.pos.dao.custom.BatchDao;
 import com.dev.pos.dto.BatchDTO;
+import com.dev.pos.dto.ProductDetailJoinDTO;
 import com.dev.pos.entity.Batch;
 
 import java.util.ArrayList;
@@ -71,6 +72,11 @@ public class BatchBoImpl implements BatchBo {
                     batch.getProductCode()
             );
         }
+        return null;
+    }
+
+    @Override
+    public ProductDetailJoinDTO findProductJoinDetail(String code) throws Exception {
         return null;
     }
 
