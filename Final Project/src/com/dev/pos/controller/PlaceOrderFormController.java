@@ -6,11 +6,15 @@ import com.dev.pos.bo.custom.BatchBo;
 import com.dev.pos.bo.custom.CustomerBo;
 import com.dev.pos.dto.CustomerDTO;
 import com.dev.pos.dto.ProductDetailJoinDTO;
+import com.dev.pos.dto.TM.CartTm;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.Window;
@@ -22,31 +26,31 @@ public class PlaceOrderFormController {
 
 
     @FXML
-    private TableView<?> tblOrder;
+    private TableView<CartTm> tblOrder;
 
     @FXML
-    private TableColumn<?, ?> colBarcode;
+    private TableColumn<CartTm, String> colBarcode;
 
     @FXML
-    private TableColumn<?, ?> colDelete;
+    private TableColumn<CartTm, Button>  colDelete;
 
     @FXML
-    private TableColumn<?, ?> colDescription;
+    private TableColumn<CartTm, Double>  colDescription;
 
     @FXML
-    private TableColumn<?, ?> colDiscount;
+    private TableColumn<CartTm, Double>  colDiscount;
 
     @FXML
-    private TableColumn<?, ?> colQty;
+    private TableColumn<CartTm, Integer>  colQty;
 
     @FXML
-    private TableColumn<?, ?> colSellingPrice;
+    private TableColumn<CartTm, Double>  colSellingPrice;
 
     @FXML
-    private TableColumn<?, ?> colShowPrice;
+    private TableColumn<CartTm, Double> colShowPrice;
 
     @FXML
-    private TableColumn<?, ?> colTotal;
+    private TableColumn<CartTm, Double>  colTotal;
 
     @FXML
     private AnchorPane context;
@@ -109,20 +113,33 @@ public class PlaceOrderFormController {
     CustomerBo customerBo = BoFactory.getInstance().getBo(BoType.CUSTOMER);
     BatchBo batchBo = BoFactory.getInstance().getBo(BoType.BATCH);
 
+    public void initialize(){
+
+        colBarcode.setCellValueFactory(new PropertyValueFactory<>("barcode"));
+        colDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
+        colSellingPrice.setCellValueFactory(new PropertyValueFactory<>("sellingPrice"));
+        colDiscount.setCellValueFactory(new PropertyValueFactory<>("discount"));
+        colShowPrice.setCellValueFactory(new PropertyValueFactory<>("showPrice"));
+        colQty.setCellValueFactory(new PropertyValueFactory<>("qty"));
+        colTotal.setCellValueFactory(new PropertyValueFactory<>("total"));
+        colDelete.setCellValueFactory(new PropertyValueFactory<>("button"));
+
+    }
+
 
     @FXML
     void btnAddNewCustomer(ActionEvent event) throws IOException {
-        setUI("CustomerForm",true);
+        setUI("CustomerForm", true);
     }
 
     @FXML
     void btnAddNewProduct(ActionEvent event) throws IOException {
-        setUI("ProductMainForm",true);
+        setUI("ProductMainForm", true);
     }
 
     @FXML
     void btnBacktoHome(ActionEvent event) throws IOException {
-        setUI("DashboardForm",false);
+        setUI("DashboardForm", false);
     }
 
     @FXML
@@ -133,14 +150,14 @@ public class PlaceOrderFormController {
     private void setUI(String location, boolean state) throws IOException {
 
         Stage stage = null;
-        Scene scene = new Scene(FXMLLoader.load(getClass().getResource("../view/"+location+".fxml")));
+        Scene scene = new Scene(FXMLLoader.load(getClass().getResource("../view/" + location + ".fxml")));
 
-        if (state){
+        if (state) {
             stage = new Stage();
             stage.setScene(scene);
             stage.show();
             stage.centerOnScreen();
-        }else {
+        } else {
             stage = (Stage) context.getScene().getWindow();
             stage.setScene(scene);
             stage.centerOnScreen();
@@ -154,17 +171,17 @@ public class PlaceOrderFormController {
 
             CustomerDTO dto = customerBo.findCustomer(txtEmail.getText().trim());
 
-            if (dto !=null){
+            if (dto != null) {
                 txtName.setText(dto.getName());
                 txtContact.setText(dto.getContact());
                 txtSalery.setText(String.valueOf(dto.getSalary()));
                 fetchLoyaltyCardData(txtEmail.getText().trim());
                 txtBarcode.requestFocus();
-            }else {
-                new Alert(Alert.AlertType.INFORMATION,"Customer Not Found..!").show();
+            } else {
+                new Alert(Alert.AlertType.INFORMATION, "Customer Not Found..!").show();
             }
 
-        }catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -172,7 +189,7 @@ public class PlaceOrderFormController {
 
     }
 
-    private void fetchLoyaltyCardData(String email){
+    private void fetchLoyaltyCardData(String email) {
         hyperLoyaltyDetails.setVisible(true);
         hyperLoyaltyDetails.setText("+ New Loyalty Details");
     }
@@ -183,7 +200,7 @@ public class PlaceOrderFormController {
 
             ProductDetailJoinDTO joinDto = batchBo.findProductJoinDetail(txtBarcode.getText().trim());
 
-            if (joinDto != null){
+            if (joinDto != null) {
                 txtDescription.setText(joinDto.getDescription());
                 txtDiscount.setText(String.valueOf(0));
                 txtSellingPrice.setText(String.valueOf(joinDto.getBatchDTO().getSellingPrice()));
@@ -191,12 +208,44 @@ public class PlaceOrderFormController {
                 txtBuyingPrice.setText(String.valueOf(joinDto.getBatchDTO().getBuyingPrice()));
                 txtQtyOnHand.setText(String.valueOf(joinDto.getBatchDTO().getQtyOnHand()));
                 txtQty.requestFocus();
-            }else {
-                new Alert(Alert.AlertType.INFORMATION,"Product Not Found..!").show();
+            } else {
+                new Alert(Alert.AlertType.INFORMATION, "Product Not Found..!").show();
             }
 
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
+        }
+
+    }
+
+    ObservableList<CartTm> obbList = FXCollections.observableArrayList();
+
+    public void addToCartOnAction(ActionEvent actionEvent) {
+
+        int qty = Integer.parseInt(txtQty.getText());
+        double sellingPrice = Double.parseDouble(txtSellingPrice.getText());
+        double total = qty * sellingPrice;
+        Button button = new Button("Remove");
+
+        if (Integer.parseInt(txtQtyOnHand.getText()) > qty) {
+
+
+            CartTm tm = new CartTm(
+                    txtBarcode.getText(),
+                    txtDescription.getText(),
+                    sellingPrice,
+                    Double.parseDouble(txtDiscount.getText()),
+                    Double.parseDouble(txtShowPrice.getText()),
+                    qty,
+                    total,
+                    button
+            );
+
+            obbList.add(tm);
+            tblOrder.setItems(obbList);
+
+        } else {
+            new Alert(Alert.AlertType.WARNING, "Quantity Exceeded..!").show();
         }
 
     }

@@ -115,7 +115,7 @@
             <Font name="System Bold" size="16.0" />
          </font>
       </TextField>
-      <TextField fx:id="txtQty" layoutX="877.0" layoutY="379.0" prefHeight="38.0" prefWidth="72.0" promptText="QTY">
+      <TextField fx:id="txtQty" layoutX="877.0" layoutY="379.0" onAction="#addToCartOnAction" prefHeight="38.0" prefWidth="72.0" promptText="QTY">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
