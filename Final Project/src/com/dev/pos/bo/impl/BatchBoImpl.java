@@ -77,7 +77,7 @@ public class BatchBoImpl implements BatchBo {
 
     @Override
     public ProductDetailJoinDTO findProductJoinDetail(String code) throws Exception {
-        return null;
+        return batchDao.findProductDetailJoinData(code);
     }
 
 }
