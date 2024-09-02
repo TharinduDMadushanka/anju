@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane fx:id="context" prefHeight="720.0" prefWidth="1020.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dev.pos.controller.PlaceOrderFormController">
+   <children>
+      <Label layoutX="34.0" layoutY="33.0" prefHeight="35.0" prefWidth="279.0" text="Place Order Form">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Label>
+      <Separator layoutX="34.0" layoutY="93.0" prefHeight="8.0" prefWidth="986.0" />
+      <Button layoutX="899.0" layoutY="37.0" mnemonicParsing="false" onAction="#btnBacktoHome" prefHeight="26.0" prefWidth="116.0" text="Back to Home">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <RadioButton fx:id="rbnManualMode" layoutX="34.0" layoutY="109.0" mnemonicParsing="false" selected="true" text="Manual Mode">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+         <toggleGroup>
+            <ToggleGroup fx:id="qrMode" />
+         </toggleGroup>
+      </RadioButton>
+      <RadioButton fx:id="rbnAuotoMode" layoutX="174.0" layoutY="109.0" mnemonicParsing="false" text="Auto Mode" toggleGroup="$qrMode">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </RadioButton>
+      <Label layoutX="34.0" layoutY="151.0" prefHeight="35.0" prefWidth="161.0" text="Customer Details" textFill="#2a1abc">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtEmail" layoutX="34.0" layoutY="201.0" prefHeight="26.0" prefWidth="209.0" promptText="Customer Email">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="txtName" editable="false" layoutX="254.0" layoutY="201.0" prefHeight="37.0" prefWidth="210.0" promptText="Customer Name">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="txtContact" editable="false" layoutX="492.0" layoutY="201.0" prefHeight="20.0" prefWidth="150.0" promptText="Contact">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="txtSalery" editable="false" layoutX="664.0" layoutY="201.0" prefHeight="20.0" prefWidth="150.0" promptText="Salery">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </TextField>
+      <Label fx:id="lblMembership" layoutX="203.0" layoutY="160.0" prefHeight="20.0" prefWidth="91.0" text="(GOLD)" textFill="#d71515">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Hyperlink fx:id="hyperLoyaltyDetails" layoutX="34.0" layoutY="261.0" text="Show Loyalty Card Details" underline="true">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Hyperlink>
+      <Label layoutX="28.0" layoutY="319.0" prefHeight="35.0" prefWidth="161.0" text="Product Detals" textFill="#2a1abc">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtBarcode" layoutX="168.0" layoutY="318.0" prefHeight="26.0" prefWidth="209.0" promptText="Barcode">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="txtDescription" editable="false" layoutX="28.0" layoutY="379.0" prefHeight="37.0" prefWidth="210.0" promptText="Description">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="txtSellingPrice" editable="false" layoutX="254.0" layoutY="379.0" prefHeight="38.0" prefWidth="116.0" promptText="Selling Price">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="txtDiscount" editable="false" layoutX="385.0" layoutY="379.0" prefHeight="38.0" prefWidth="100.0" promptText="Discount">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="txtShowPrice" editable="false" layoutX="499.0" layoutY="380.0" prefHeight="37.0" prefWidth="100.0" promptText="Show Price">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="txtBuyingPrice" editable="false" layoutX="614.0" layoutY="379.0" prefHeight="38.0" prefWidth="116.0" promptText="Buying Price">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="txtQtyOnHand" editable="false" layoutX="739.0" layoutY="379.0" prefHeight="38.0" prefWidth="118.0" promptText="QTY On Hand">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="txtQty" layoutX="877.0" layoutY="379.0" prefHeight="38.0" prefWidth="72.0" promptText="QTY">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </TextField>
+      <TableView fx:id="tblOrder" layoutX="38.0" layoutY="455.0" prefHeight="200.0" prefWidth="955.0">
+        <columns>
+          <TableColumn fx:id="colBarcode" prefWidth="192.79995346069336" text="#" />
+          <TableColumn fx:id="colDescription" prefWidth="235.99996948242188" text="Description" />
+            <TableColumn fx:id="colSellingPrice" minWidth="0.0" prefWidth="79.2000732421875" text="Sell Price" />
+            <TableColumn fx:id="colDiscount" minWidth="0.0" prefWidth="68.800048828125" text="Discount" />
+            <TableColumn fx:id="colShowPrice" minWidth="0.0" prefWidth="88.79998779296875" text="Show Price" />
+            <TableColumn fx:id="colQty" minWidth="0.0" prefWidth="78.4000244140625" text="QTY" />
+            <TableColumn fx:id="colTotal" minWidth="0.0" prefWidth="131.2000732421875" text="Total" />
+            <TableColumn fx:id="colDelete" minWidth="0.0" prefWidth="80.0001220703125" text="Delete" />
+        </columns>
+      </TableView>
+      <Label layoutX="38.0" layoutY="673.0" prefHeight="27.0" prefWidth="100.0" text="Total Cost :" textFill="#d71515">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblTotal" layoutX="152.0" layoutY="673.0" prefHeight="20.0" prefWidth="60.0" text="0.0/=">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <Button layoutX="850.0" layoutY="664.0" mnemonicParsing="false" onAction="#btnCompleteOrder" prefHeight="35.0" prefWidth="142.0" text="Complete Order">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button layoutX="861.0" layoutY="111.0" mnemonicParsing="false" onAction="#btnAddNewCustomer" prefHeight="35.0" prefWidth="131.0" text="+ New Customer">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button layoutX="861.0" layoutY="152.0" mnemonicParsing="false" onAction="#btnAddNewProduct" prefHeight="35.0" prefWidth="131.0" text="+ New Product">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+   </children>
+</AnchorPane>
