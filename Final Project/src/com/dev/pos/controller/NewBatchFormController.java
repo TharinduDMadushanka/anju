@@ -72,11 +72,11 @@ public class NewBatchFormController {
     Stage stage = new Stage();
 
     public void initialize() {
-        try {
-            setQRcode();
-        } catch (WriterException e) {
-            throw new RuntimeException(e);
-        }
+//        try {
+//            setQRcode();
+//        } catch (WriterException e) {
+//            throw new RuntimeException(e);
+//        }
     }
 
     @FXML
@@ -149,20 +149,32 @@ public class NewBatchFormController {
 
             if (state) {
                 //load
-                batchBo.findBatch(tm.getCode());
-                txtQTy.setText(String.valueOf(tm.getQty()));
-                txtBuyingPrice.setText(String.valueOf(tm.getByingPrice()));
-                txtSellingPrice.setText(String.valueOf(tm.getSellingPrice()));
-                txtShowPrice.setText(String.valueOf(tm.getShowPrice()));
-                discount.setUserData(tm.isDiscount());
+                BatchDTO dto = batchBo.findBatch(tm.getCode());
 
-                txtProductCode.setText(String.valueOf(code));
-                txtDescription.setText(description);
+                if (dto != null) {
+
+                    txtQTy.setText(String.valueOf(tm.getQty()));
+                    txtBuyingPrice.setText(String.valueOf(tm.getByingPrice()));
+                    txtSellingPrice.setText(String.valueOf(tm.getSellingPrice()));
+                    txtShowPrice.setText(String.valueOf(tm.getShowPrice()));
+                    discount.setUserData(tm.isDiscount());
+
+                    txtProductCode.setText(String.valueOf(code));
+                    txtDescription.setText(description);
+
+                    byte [] data = Base64.decodeBase64(dto.getBarcode());
+                    imgQR.setImage(new Image(new ByteArrayInputStream(data)));
+
+                } else {
+                    stage.close();
+                }
 
             } else {
-                stage.close();
+                setQRcode();
+                txtDescription.setText(description);
+                txtProductCode.setText(String.valueOf(code));
             }
-        } catch ( Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

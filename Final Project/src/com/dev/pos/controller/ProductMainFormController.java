@@ -287,8 +287,6 @@ public class ProductMainFormController {
             stage.show();
             stage.centerOnScreen();
 
-
-
         } else {
             new Alert(Alert.AlertType.WARNING, "Please select valid product..!").show();
         }
