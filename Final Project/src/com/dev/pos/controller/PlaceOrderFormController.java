@@ -250,6 +250,7 @@ public class PlaceOrderFormController {
                 tblOrder.setItems(obbList);
                 clearFields();
                 txtBarcode.requestFocus();
+                setTotal();
 
             } else {
                 new Alert(Alert.AlertType.WARNING, "Quantity Exceeded..!").show();
@@ -260,6 +261,7 @@ public class PlaceOrderFormController {
             tblOrder.refresh();
             clearFields();
             txtBarcode.requestFocus();
+            setTotal();
         }
 
 
@@ -275,7 +277,7 @@ public class PlaceOrderFormController {
         return null;
     }
 
-    private void clearFields(){
+    private void clearFields() {
         txtBarcode.clear();
         txtDescription.clear();
         txtDiscount.clear();
@@ -284,6 +286,15 @@ public class PlaceOrderFormController {
         txtBuyingPrice.clear();
         txtQtyOnHand.clear();
         txtQty.clear();
+    }
+
+    private void setTotal() {
+
+        double total = 0;
+        for (CartTm tm : obbList) {
+            total += tm.getTotal();
+        }
+        lblTotal.setText(String.valueOf(total+" /="));
     }
 
 }
