@@ -2,8 +2,10 @@ package com.dev.pos.controller;
 
 import com.dev.pos.Enum.BoType;
 import com.dev.pos.bo.BoFactory;
+import com.dev.pos.bo.custom.BatchBo;
 import com.dev.pos.bo.custom.CustomerBo;
 import com.dev.pos.dto.CustomerDTO;
+import com.dev.pos.dto.ProductDetailJoinDTO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -105,6 +107,7 @@ public class PlaceOrderFormController {
 
 
     CustomerBo customerBo = BoFactory.getInstance().getBo(BoType.CUSTOMER);
+    BatchBo batchBo = BoFactory.getInstance().getBo(BoType.BATCH);
 
 
     @FXML
@@ -172,5 +175,29 @@ public class PlaceOrderFormController {
     private void fetchLoyaltyCardData(String email){
         hyperLoyaltyDetails.setVisible(true);
         hyperLoyaltyDetails.setText("+ New Loyalty Details");
+    }
+
+    public void loadProductOnAction(ActionEvent actionEvent) {
+
+        try {
+
+            ProductDetailJoinDTO joinDto = batchBo.findProductJoinDetail(txtBarcode.getText().trim());
+
+            if (joinDto != null){
+                txtDescription.setText(joinDto.getDescription());
+                txtDiscount.setText(String.valueOf(0));
+                txtSellingPrice.setText(String.valueOf(joinDto.getBatchDTO().getSellingPrice()));
+                txtShowPrice.setText(String.valueOf(joinDto.getBatchDTO().getShowPrice()));
+                txtBuyingPrice.setText(String.valueOf(joinDto.getBatchDTO().getBuyingPrice()));
+                txtQtyOnHand.setText(String.valueOf(joinDto.getBatchDTO().getQtyOnHand()));
+                txtQty.requestFocus();
+            }else {
+                new Alert(Alert.AlertType.INFORMATION,"Product Not Found..!").show();
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
 }
