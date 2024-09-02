@@ -1,21 +1,20 @@
 package com.dev.pos.controller;
 
+import com.dev.pos.Enum.BoType;
+import com.dev.pos.bo.BoFactory;
+import com.dev.pos.bo.custom.CustomerBo;
+import com.dev.pos.dto.CustomerDTO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Hyperlink;
-import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class PlaceOrderFormController {
 
@@ -104,6 +103,10 @@ public class PlaceOrderFormController {
     @FXML
     private TextField txtShowPrice;
 
+
+    CustomerBo customerBo = BoFactory.getInstance().getBo(BoType.CUSTOMER);
+
+
     @FXML
     void btnAddNewCustomer(ActionEvent event) throws IOException {
         setUI("CustomerForm",true);
@@ -142,4 +145,31 @@ public class PlaceOrderFormController {
 
     }
 
+    public void searchCustomerOnAction(ActionEvent actionEvent) {
+
+        try {
+
+            CustomerDTO dto = customerBo.findCustomer(txtEmail.getText().trim());
+
+            if (dto !=null){
+                txtName.setText(dto.getName());
+                txtContact.setText(dto.getContact());
+                txtSalery.setText(String.valueOf(dto.getSalary()));
+                fetchLoyaltyCardData(txtEmail.getText().trim());
+                txtBarcode.requestFocus();
+            }else {
+                new Alert(Alert.AlertType.INFORMATION,"Customer Not Found..!").show();
+            }
+
+        }catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    private void fetchLoyaltyCardData(String email){
+
+    }
 }

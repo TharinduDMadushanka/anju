@@ -45,7 +45,7 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <TextField fx:id="txtEmail" layoutX="34.0" layoutY="201.0" prefHeight="26.0" prefWidth="209.0" promptText="Customer Email">
+      <TextField fx:id="txtEmail" layoutX="34.0" layoutY="201.0" onAction="#searchCustomerOnAction" prefHeight="26.0" prefWidth="209.0" promptText="Customer Email">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
