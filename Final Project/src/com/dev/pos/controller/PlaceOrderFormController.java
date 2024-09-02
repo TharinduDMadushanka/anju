@@ -170,6 +170,7 @@ public class PlaceOrderFormController {
     }
 
     private void fetchLoyaltyCardData(String email){
-
+        hyperLoyaltyDetails.setVisible(true);
+        hyperLoyaltyDetails.setText("+ New Loyalty Details");
     }
 }

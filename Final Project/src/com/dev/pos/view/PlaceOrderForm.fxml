@@ -70,7 +70,7 @@
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <Hyperlink fx:id="hyperLoyaltyDetails" layoutX="34.0" layoutY="261.0" text="Show Loyalty Card Details" underline="true">
+      <Hyperlink fx:id="hyperLoyaltyDetails" layoutX="34.0" layoutY="261.0" text="Show Loyalty Card Details" underline="true" visible="false">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
