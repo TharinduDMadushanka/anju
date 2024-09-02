@@ -32,25 +32,25 @@ public class PlaceOrderFormController {
     private TableColumn<CartTm, String> colBarcode;
 
     @FXML
-    private TableColumn<CartTm, Button>  colDelete;
+    private TableColumn<CartTm, Button> colDelete;
 
     @FXML
-    private TableColumn<CartTm, Double>  colDescription;
+    private TableColumn<CartTm, Double> colDescription;
 
     @FXML
-    private TableColumn<CartTm, Double>  colDiscount;
+    private TableColumn<CartTm, Double> colDiscount;
 
     @FXML
-    private TableColumn<CartTm, Integer>  colQty;
+    private TableColumn<CartTm, Integer> colQty;
 
     @FXML
-    private TableColumn<CartTm, Double>  colSellingPrice;
+    private TableColumn<CartTm, Double> colSellingPrice;
 
     @FXML
     private TableColumn<CartTm, Double> colShowPrice;
 
     @FXML
-    private TableColumn<CartTm, Double>  colTotal;
+    private TableColumn<CartTm, Double> colTotal;
 
     @FXML
     private AnchorPane context;
@@ -113,7 +113,7 @@ public class PlaceOrderFormController {
     CustomerBo customerBo = BoFactory.getInstance().getBo(BoType.CUSTOMER);
     BatchBo batchBo = BoFactory.getInstance().getBo(BoType.BATCH);
 
-    public void initialize(){
+    public void initialize() {
 
         colBarcode.setCellValueFactory(new PropertyValueFactory<>("barcode"));
         colDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
@@ -225,28 +225,65 @@ public class PlaceOrderFormController {
         int qty = Integer.parseInt(txtQty.getText());
         double sellingPrice = Double.parseDouble(txtSellingPrice.getText());
         double total = qty * sellingPrice;
-        Button button = new Button("Remove");
-
-        if (Integer.parseInt(txtQtyOnHand.getText()) > qty) {
 
 
-            CartTm tm = new CartTm(
-                    txtBarcode.getText(),
-                    txtDescription.getText(),
-                    sellingPrice,
-                    Double.parseDouble(txtDiscount.getText()),
-                    Double.parseDouble(txtShowPrice.getText()),
-                    qty,
-                    total,
-                    button
-            );
+        CartTm selectedItem = isExist(txtBarcode.getText().trim());
 
-            obbList.add(tm);
-            tblOrder.setItems(obbList);
+        if (selectedItem == null) {
+            Button button = new Button("Remove");
 
+            if (Integer.parseInt(txtQtyOnHand.getText()) > qty) {
+
+
+                CartTm tm = new CartTm(
+                        txtBarcode.getText(),
+                        txtDescription.getText(),
+                        sellingPrice,
+                        Double.parseDouble(txtDiscount.getText()),
+                        Double.parseDouble(txtShowPrice.getText()),
+                        qty,
+                        total,
+                        button
+                );
+
+                obbList.add(tm);
+                tblOrder.setItems(obbList);
+                clearFields();
+                txtBarcode.requestFocus();
+
+            } else {
+                new Alert(Alert.AlertType.WARNING, "Quantity Exceeded..!").show();
+            }
         } else {
-            new Alert(Alert.AlertType.WARNING, "Quantity Exceeded..!").show();
+            selectedItem.setQty(qty + selectedItem.getQty());
+            selectedItem.setTotal(total + selectedItem.getTotal());
+            tblOrder.refresh();
+            clearFields();
+            txtBarcode.requestFocus();
         }
 
+
     }
+
+    private CartTm isExist(String code) {
+
+        for (CartTm tm : obbList) {
+            if (tm.getBarcode().equals(code)) {
+                return tm;
+            }
+        }
+        return null;
+    }
+
+    private void clearFields(){
+        txtBarcode.clear();
+        txtDescription.clear();
+        txtDiscount.clear();
+        txtSellingPrice.clear();
+        txtShowPrice.clear();
+        txtBuyingPrice.clear();
+        txtQtyOnHand.clear();
+        txtQty.clear();
+    }
+
 }
