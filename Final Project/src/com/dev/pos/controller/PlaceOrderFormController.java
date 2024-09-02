@@ -252,6 +252,12 @@ public class PlaceOrderFormController {
                 txtBarcode.requestFocus();
                 setTotal();
 
+                button.setOnAction(event -> {
+                    obbList.remove(tm);
+                    tblOrder.refresh();
+                    setTotal();
+                });
+
             } else {
                 new Alert(Alert.AlertType.WARNING, "Quantity Exceeded..!").show();
             }
