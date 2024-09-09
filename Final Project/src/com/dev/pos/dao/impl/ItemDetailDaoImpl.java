@@ -1,5 +1,6 @@
 package com.dev.pos.dao.impl;
 
+import com.dev.pos.dao.CrudUtil;
 import com.dev.pos.dao.custom.ItemDetailDao;
 import com.dev.pos.entity.ItemDetail;
 
@@ -9,7 +10,14 @@ import java.util.List;
 public class ItemDetailDaoImpl implements ItemDetailDao {
     @Override
     public boolean save(ItemDetail itemDetail) throws Exception, ClassNotFoundException {
-        return false;
+        String sql = "INSERT INTO order_details_has_product_details VALUES(?,?,?,?,?)";
+        return CrudUtil.execute(sql,
+                itemDetail.getOrderDetailCode(),
+                itemDetail.getOrder(),
+                itemDetail.getQty(),
+                itemDetail.getDiscount(),
+                itemDetail.getAmount()
+        );
     }
 
     @Override
