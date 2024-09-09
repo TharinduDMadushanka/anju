@@ -1,6 +1,6 @@
 package com.dev.pos.entity;
 
-public class ItemDetail {
+public class ItemDetail implements SuperEntity {
 
     private int orderDetailCode;
     private int order;
