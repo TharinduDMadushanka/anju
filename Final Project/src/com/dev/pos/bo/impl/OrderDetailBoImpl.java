@@ -54,7 +54,7 @@ public class OrderDetailBoImpl implements OrderDetailBo {
                 if (isItemDetailSave) {
                     connection.commit();
                     return true;
-                }else {
+                } else {
                     connection.rollback();
                     return false;
                 }

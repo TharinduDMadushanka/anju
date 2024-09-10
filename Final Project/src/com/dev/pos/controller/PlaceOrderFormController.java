@@ -4,9 +4,13 @@ import com.dev.pos.Enum.BoType;
 import com.dev.pos.bo.BoFactory;
 import com.dev.pos.bo.custom.BatchBo;
 import com.dev.pos.bo.custom.CustomerBo;
+import com.dev.pos.bo.custom.OrderDetailBo;
 import com.dev.pos.dto.CustomerDTO;
+import com.dev.pos.dto.ItemDetailDTO;
+import com.dev.pos.dto.OrderDetailDTO;
 import com.dev.pos.dto.ProductDetailJoinDTO;
 import com.dev.pos.dto.TM.CartTm;
+import com.dev.pos.util.security.UserSessionData;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -21,6 +25,9 @@ import javafx.stage.Window;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Random;
 
 public class PlaceOrderFormController {
 
@@ -112,6 +119,7 @@ public class PlaceOrderFormController {
 
     CustomerBo customerBo = BoFactory.getInstance().getBo(BoType.CUSTOMER);
     BatchBo batchBo = BoFactory.getInstance().getBo(BoType.BATCH);
+    OrderDetailBo detailBo= BoFactory.getInstance().getBo(BoType.ORDER_DETAIL);
 
     public void initialize() {
 
@@ -144,6 +152,44 @@ public class PlaceOrderFormController {
 
     @FXML
     void btnCompleteOrder(ActionEvent event) {
+
+        ArrayList<ItemDetailDTO> detailsDTOS = new ArrayList<>();
+
+        double discount = 0;
+
+        for (CartTm tm : obbList) {
+            detailsDTOS.add(new ItemDetailDTO(
+                    tm.getBarcode(),
+                    tm.getQty(),
+                    tm.getDiscount(),
+                    tm.getTotal()
+            ));
+            discount += tm.getDiscount();
+        }
+
+        OrderDetailDTO dto = new OrderDetailDTO(
+                new Random().nextInt(100001),
+                new Date(),
+                Double.parseDouble(lblTotal.getText().split("/=")[0]),
+                txtEmail.getText(),
+                0,
+                UserSessionData.email,
+                detailsDTOS
+        );
+
+        try {
+
+            boolean isSaved = detailBo.makeOrder(dto);
+
+            if (isSaved){
+                new Alert(Alert.AlertType.INFORMATION, "Order saved successfully").show();
+            }else {
+                new Alert(Alert.AlertType.ERROR, "Order not saved ").show();
+            }
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
 
     }
 

@@ -7,6 +7,7 @@ import com.dev.pos.dao.DatabaseAccessCode;
 import com.dev.pos.db.DBConnection;
 import com.dev.pos.dto.UserDTO;
 import com.dev.pos.util.security.PasswordManager;
+import com.dev.pos.util.security.UserSessionData;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -63,6 +64,7 @@ public class LoginFormController {
 
            if(user != null){
                if(PasswordManager.checkPassword(txtPassword.getText(), user.getPassword())){
+                   UserSessionData.email= txtEmail.getText().trim();
                    setUI("DashboardForm");
                }else {
                    new Alert(Alert.AlertType.ERROR, "User not found.!").show();
