@@ -26,12 +26,12 @@ public class ItemDetailDaoImpl implements ItemDetailDao {
     }
 
     @Override
-    public boolean delete(Integer integer) throws Exception, ClassNotFoundException {
+    public boolean delete(String s) throws Exception, ClassNotFoundException {
         return false;
     }
 
     @Override
-    public ItemDetail find(Integer integer) throws Exception, ClassNotFoundException {
+    public ItemDetail find(String s) throws Exception, ClassNotFoundException {
         return null;
     }
 
@@ -41,7 +41,7 @@ public class ItemDetailDaoImpl implements ItemDetailDao {
     }
 
     @Override
-    public List<ItemDetail> search(Integer integer) throws Exception, ClassNotFoundException {
+    public List<ItemDetail> search(String s) throws Exception, ClassNotFoundException {
         return Collections.emptyList();
     }
 }

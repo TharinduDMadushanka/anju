@@ -11,6 +11,7 @@ public class OrderDetail implements SuperEntity {
     private double discount;
     private String usrEmail;
 
+
     public OrderDetail() {
     }
 
