@@ -8,11 +8,13 @@ import java.util.List;
 public interface ItemService {
     String saveItem(ItemSaveRequestDTO saveRequestDTO);
 
-    String updateItem(ItemSaveRequestDTO requestDTO);
+    List<ItemResponseDto> getItemByName(String name);
 
-    List<ItemResponseDto> getAllItems();
-
-    ItemResponseDto getItemsById(int itemId);
-
-    String deleteItem(int itemId);
+//    String updateItem(ItemSaveRequestDTO requestDTO);
+//
+//    List<ItemResponseDto> getAllItems();
+//
+//    ItemResponseDto getItemsById(int itemId);
+//
+//    String deleteItem(int itemId);
 }

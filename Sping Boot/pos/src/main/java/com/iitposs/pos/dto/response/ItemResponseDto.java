@@ -22,6 +22,5 @@ public class ItemResponseDto {
 
     private int qtyOnHand;
 
-    private boolean activeState;
 
 }

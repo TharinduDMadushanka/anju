@@ -10,8 +10,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ItemSaveRequestDTO {
 
-    private int itemID;
-
     private String itemName;
 
     private MeasuringType measuringType;
