@@ -4,6 +4,7 @@ import com.iitposs.pos.dto.request.CustomerSaveRequestDTO;
 import com.iitposs.pos.dto.response.CustomerAllDetailsResponseDto;
 import com.iitposs.pos.dto.response.CustomerResponseDto;
 import com.iitposs.pos.entity.Customer;
+import com.iitposs.pos.exception.NotFoundException;
 import com.iitposs.pos.repo.CustomerRepo;
 import com.iitposs.pos.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,20 +89,24 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public List<CustomerResponseDto> getAllCustomers() {
         List<Customer> customers = customerRepo.findAll();
+
         List<CustomerResponseDto> responseDtoList = new ArrayList<>();
 
-        for (Customer customer : customers) {
-            responseDtoList.add(new CustomerResponseDto(
-                    customer.getCustomerName(),
-                    customer.getCustomerAddress(),
-                    customer.getSalary(),
-                    customer.getContacts(),
-                    customer.getNic(),
-                    customer.isActiveState()
-            ));
+        if (!customers.isEmpty()) {
+            for (Customer customer : customers) {
+                responseDtoList.add(new CustomerResponseDto(
+                        customer.getCustomerName(),
+                        customer.getCustomerAddress(),
+                        customer.getSalary(),
+                        customer.getContacts(),
+                        customer.getNic(),
+                        customer.isActiveState()
+                ));
+            }
+            return responseDtoList;
+        }else {
+            throw new NotFoundException("Customer not found..!");
         }
-        return responseDtoList;
-
     }
 
     @Override
