@@ -1,5 +1,6 @@
 package com.iitposs.pos.controller;
 
+import com.iitposs.pos.dto.paginated.PaginatedResponseItemDTO;
 import com.iitposs.pos.dto.request.ItemSaveRequestDTO;
 import com.iitposs.pos.dto.response.ItemResponseDto;
 import com.iitposs.pos.entity.Item;
@@ -38,6 +39,24 @@ public class ItemController {
         List<ItemResponseDto> responseDtos = itemService.getItemByName(name);
         return new ResponseEntity<StandardResponse>(
                 new StandardResponse(201,"Success",responseDtos), HttpStatus.CREATED
+        );
+
+    }
+
+    @GetMapping(
+            path = "/get-all-items-by-state",
+            params = {"state","page","size"}
+    )
+    public ResponseEntity<StandardResponse> getAllItemByState(
+            @RequestParam(value = "state") boolean state,
+            @RequestParam(value = "page") int page,
+            @RequestParam(value = "size") int size
+    ){
+
+        PaginatedResponseItemDTO pdto = itemService.getItemByState(state,page,size);
+
+        return new ResponseEntity<StandardResponse>(
+                new StandardResponse(201,"Success",pdto), HttpStatus.CREATED
         );
 
     }

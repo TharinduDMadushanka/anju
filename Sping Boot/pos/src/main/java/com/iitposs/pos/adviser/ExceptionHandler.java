@@ -13,7 +13,7 @@ public class ExceptionHandler {
     @org.springframework.web.bind.annotation.ExceptionHandler(NotFoundException.class)
     ResponseEntity<StandardResponse> notFoundExceptionHandler(NotFoundException e){
         return new ResponseEntity<StandardResponse>(
-                new StandardResponse(404,"Error Occured",e.getMessage()), HttpStatus.NOT_FOUND
+                new StandardResponse(404,"Error Occurred",e.getMessage()), HttpStatus.NOT_FOUND
         );
     }
 

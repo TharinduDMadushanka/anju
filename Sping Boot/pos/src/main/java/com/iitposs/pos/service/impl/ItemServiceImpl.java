@@ -1,5 +1,6 @@
 package com.iitposs.pos.service.impl;
 
+import com.iitposs.pos.dto.paginated.PaginatedResponseItemDTO;
 import com.iitposs.pos.dto.request.ItemSaveRequestDTO;
 import com.iitposs.pos.dto.response.ItemResponseDto;
 import com.iitposs.pos.entity.Item;
@@ -8,10 +9,13 @@ import com.iitposs.pos.service.ItemService;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class ItemServiceImpl implements ItemService {
@@ -57,6 +61,25 @@ public class ItemServiceImpl implements ItemService {
             return itemResponseDtos;
         }else {
             return null;
+        }
+
+    }
+
+    @Override
+    public PaginatedResponseItemDTO getItemByState(boolean state, int page, int size) {
+        Page<Item> items = itemRepo.findAllByActiveStateEquals(state, PageRequest.of(page, size));
+
+        if (!items.isEmpty()){
+            List<ItemResponseDto> itemResponseDtos =
+                    modelMapper.map(items.getContent(), new TypeToken<List<ItemResponseDto>>() {}.getType());
+
+            return new PaginatedResponseItemDTO(
+                    itemResponseDtos,
+                    items.getTotalElements()
+            );
+
+        }else {
+            throw new NoSuchElementException("No data found");
         }
 
     }

@@ -1,5 +1,6 @@
 package com.iitposs.pos.service;
 
+import com.iitposs.pos.dto.paginated.PaginatedResponseItemDTO;
 import com.iitposs.pos.dto.request.ItemSaveRequestDTO;
 import com.iitposs.pos.dto.response.ItemResponseDto;
 
@@ -9,6 +10,8 @@ public interface ItemService {
     String saveItem(ItemSaveRequestDTO saveRequestDTO);
 
     List<ItemResponseDto> getItemByName(String name);
+
+    PaginatedResponseItemDTO getItemByState(boolean state, int page, int size);
 
 //    String updateItem(ItemSaveRequestDTO requestDTO);
 //
