@@ -2,6 +2,6 @@ package DesignPatterns.Adapter;
 
 public interface Charger {
 
-    public void chargingPort(Vivo vivo);
+    void chargingPort(Vivo vivo);
 
 }

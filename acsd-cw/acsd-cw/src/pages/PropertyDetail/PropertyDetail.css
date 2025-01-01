@@ -1,0 +1,88 @@
+.property-detail-page {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f9f9f9;
+  }
+  
+  .property-detail-container {
+    display: flex;
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  .left-side {
+    flex: 1;
+    padding: 20px;
+  }
+  
+  .property-image {
+    width: 100%;
+    width: 600px;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .right-side {
+    flex: 1.5;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .property-card {
+    background-color: #fff;
+    padding: 20px;
+    width: 500px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .property-card h2 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  .property-card p {
+    font-size: 1rem;
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 10px;
+  }
+  
+  .property-card p:nth-child(odd) {
+    font-weight: bold;
+  }
+  
+  .property-card p:last-child {
+    font-style: italic;
+    color: #777;
+  }
+  
+  .property-card span {
+    color: #007BFF;
+    cursor: pointer;
+  }
+  
+  @media (max-width: 768px) {
+    .property-detail-container {
+      flex-direction: column;
+    }
+  
+    .left-side, .right-side {
+      flex: 1;
+      padding: 10px;
+    }
+  
+    .property-image {
+      max-height: 400px;
+      object-fit: cover;
+    }
+  }
+  

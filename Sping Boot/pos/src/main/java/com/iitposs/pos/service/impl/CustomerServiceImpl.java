@@ -105,7 +105,7 @@ public class CustomerServiceImpl implements CustomerService {
             }
             return responseDtoList;
         }else {
-            throw new NotFoundException("Customer not found..!");
+            throw new NotFoundException("Customer not found..!public");
         }
     }
 

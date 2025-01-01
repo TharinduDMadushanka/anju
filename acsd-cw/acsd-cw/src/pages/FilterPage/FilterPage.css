@@ -1,0 +1,237 @@
+/* FilterPage.css */
+.filter-page {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+  }
+  
+  .filter-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap; /* Ensures responsiveness */
+    gap: 15px;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .filter-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .filter-page {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+}
+
+.filter-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap; /* Ensures responsiveness */
+    gap: 15px;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.filter-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.filter-label {
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+}
+
+.filter-input,
+.filter-select {
+    padding: 8px 12px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 150px; /* Set a uniform width */
+    transition: border-color 0.2s ease;
+}
+
+.filter-input:focus,
+.filter-select:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+.search-btn {
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #ffffff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.search-btn:hover {
+    background-color: #0056b3;
+}
+
+.filter-button {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.filter-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.filter-btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: 1px solid #007bff;
+    background-color: #fff;
+    color: #007bff;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.filter-btn.active {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.filter-btn:hover {
+    background-color: #0056b3;
+    color: #fff;
+}
+
+.properties-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 columns in a row */
+  gap: 5px;
+  margin: 20px;
+}
+
+.property-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+
+.property-card img {
+  width: 100%; /* This will make the image fit the width of the card */
+  height: 200px;
+  object-fit: cover;
+}
+
+
+.property-details {
+    padding: 15px;
+    /* width: 100px; */
+}
+
+.property-details h3 {
+    margin: 0 0 10px;
+    color: #333;
+}
+
+.property-details p {
+    margin: 5px 0;
+    color: #666;
+}
+
+.view-details {
+    display: inline-block;
+    margin-top: 10px;
+    color: #007bff;
+    text-decoration: none;
+}
+
+.view-details:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+    .filter-section {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .filter-item {
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    .filter-input,
+    .filter-select {
+        width: 100%;
+    }
+
+    .filter-button {
+        justify-content: center;
+    }
+
+    .properties-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+  .filter-label {
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+  }
+  
+  .filter-input,
+  .filter-select {
+    padding: 8px 12px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 150px; /* Set a uniform width */
+    transition: border-color 0.2s ease;
+  }
+  
+  .filter-input:focus,
+  .filter-select:focus {
+    border-color: #007bff;
+    outline: none;
+  }
+  
+  .search-btn {
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #ffffff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .search-btn:hover {
+    background-color: #0056b3;
+  }
+  
+  .filter-button {
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  
